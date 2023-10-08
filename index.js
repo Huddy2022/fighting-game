@@ -48,6 +48,23 @@ const player = new Fighter({
     offset: {
         x: 0,
         y: 0
+    },
+    imageSrc: './img/samurai/Idle.png',
+    scale: 3.5,
+    framesMax: 8,
+    offset: {
+        x: 200,
+        y: 250
+    },
+    sprites: {
+        idle: {
+            imageSrc: './img/samurai/Idle.png',
+            framesMax: 8
+        },
+        run: {
+            imageSrc: './img/samurai/Run.png',
+            framesMax: 8,
+        }
     }
 })
 
@@ -98,16 +115,19 @@ function animate() {
     ghost.update()
     fireSkull.update()
     player.update()
-    enemy.update()
+    //enemy.update()
 
     player.velocity.x = 0
     enemy.velocity.x = 0
 
     //Player movemnet
+    player.image = player.sprites.idle.image
     if (keys.a.pressed && player.lastKey === 'a') {
         player.velocity.x = -5
+        player.image = player.sprites.run.image
     } else if (keys.d.pressed && player.lastKey === 'd') {
         player.velocity.x = 5
+        player.image = player.sprites.run.image
     }
 
     //Enemy movemnet
