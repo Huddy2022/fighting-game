@@ -1,13 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fighting Game</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+    </style>
 </head>
+
 <body>
-<canvas></canvas>
-    
+    <!--Red container div-->
+    <div style="position: relative; display: inline-block">
+        <div style="position: absolute; display: flex; width: 100%; align-items: center; padding: 20px;">
+            <!--Player Health-->
+            <div style="background-color: yellow; height: 30px; width: 100%;"></div>
+            <!--Timer-->
+            <div style="background-color: red; height: 100px; width: 100px; flex-shrink: 0;"></div>
+            <!--Enemy Health-->
+            <div style="background-color: yellow; height: 30px; width: 100%;"> </div>
+        </div>
+        <canvas></canvas>
+    </div>
 </body>
 <script src="index.js"></script>
+
 </html>
