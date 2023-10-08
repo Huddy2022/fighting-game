@@ -31,6 +31,7 @@ class Sprite {
         }
         this.color = color
         this.isAttacking
+        this.health = 100
     }
 
     draw() {
@@ -39,8 +40,8 @@ class Sprite {
 
         //attack Box
         if (this.isAttacking) {
-        c.fillStyle = 'green'
-        c.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
+            c.fillStyle = 'green'
+            c.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
         }
     }
 
@@ -59,9 +60,11 @@ class Sprite {
     }
 
     attack() {
+        console.log('Attack started');
         this.isAttacking = true
         setTimeout(() => {
             this.isAttacking = false
+            console.log('Attack ended');
         }, 100)
     }
 }
@@ -130,6 +133,47 @@ function rectangluarCollison({
     )
 }
 
+function determineWinner({
+    player,
+    enemy,
+    timerId
+}) {
+    clearTimeout(timerId)
+    document.querySelector('#displayText').style.display = 'flex'
+    if (player.health === enemy.health) {
+        document.querySelector('#displayText').innerHTML = 'Tie'
+
+    } else if (player.health > enemy.health) {
+        document.querySelector('#displayText').innerHTML = 'Player 1 Wins'
+
+    } else if (enemy.health > player.health) {
+        document.querySelector('#displayText').innerHTML = 'Player 2 Wins'
+
+    }
+
+}
+
+let timer = 60
+let timerId
+
+function decreaseTimer() {
+    timerId = setTimeout(decreaseTimer, 1000)
+    if (timer > 0) {
+        timer--
+        document.querySelector('#timer').innerHTML = timer
+    }
+
+    if (timer === 0) {
+        determineWinner({
+            player,
+            enemy,
+            timerId
+        })
+    }
+}
+
+decreaseTimer()
+
 function animate() {
     window.requestAnimationFrame(animate)
     c.fillStyle = 'black'
@@ -160,7 +204,8 @@ function animate() {
             rectangle2: enemy
         }) && player.isAttacking) {
         player.isAttacking = false
-        console.log('hit')
+        enemy.health -= 20
+        document.querySelector('#enemyHealth').style.width = enemy.health + '%'
     }
 
     if (rectangluarCollison({
@@ -168,7 +213,17 @@ function animate() {
             rectangle2: player
         }) && enemy.isAttacking) {
         enemy.isAttacking = false
-        console.log('enemy attack successful')
+        player.health -= 20
+        document.querySelector('#playerHealth').style.width = player.health + '%'
+    }
+
+    if (enemy.health <= 0 || player.health <= 0) {
+        determineWinner({
+            player,
+            enemy,
+            timerId
+        })
+
     }
 }
 
