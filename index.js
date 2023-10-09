@@ -93,6 +93,35 @@ const enemy = new Fighter({
         x: -50,
         y: 0
     },
+    imageSrc: './img/wizard/idle.png',
+    scale: 3.5,
+    framesMax: 8,
+    offset: {
+        x: 200,
+        y: 250
+    },
+    sprites: {
+        idle: {
+            imageSrc: './img/wizard/idle.png',
+            framesMax: 8
+        },
+        run: {
+            imageSrc: './img/wizard/run.png',
+            framesMax: 8,
+        },
+        jump: {
+            imageSrc: './img/wizard/jump.png',
+            framesMax: 2,
+        },
+        fall: {
+            imageSrc: './img/wizard/fall.png',
+            framesMax: 2,
+        },
+        attack1: {
+            imageSrc: './img/wizard/attack1.png',
+            framesMax: 8,
+        }
+    },
     color: 'blue'
 })
 
