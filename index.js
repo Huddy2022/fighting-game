@@ -97,8 +97,8 @@ const enemy = new Fighter({
     scale: 3.5,
     framesMax: 8,
     offset: {
-        x: 200,
-        y: 250
+        x: 0,
+        y: 405
     },
     sprites: {
         idle: {
@@ -156,7 +156,7 @@ function animate() {
     ghost.update()
     fireSkull.update()
     player.update()
-    //enemy.update()
+    enemy.update()
 
     player.velocity.x = 0
     enemy.velocity.x = 0
@@ -182,8 +182,19 @@ function animate() {
     //Enemy movemnet
     if (keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft') {
         enemy.velocity.x = -5
+        enemy.switchSprite('run')
     } else if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
         enemy.velocity.x = 5
+        enemy.switchSprite('run')
+    } else {
+        enemy.switchSprite('idle')
+    }
+
+    //Enemy Jump
+    if (enemy.velocity.y < 0) {
+        enemy.switchSprite('jump')
+    } else if (enemy.velocity.y > 0) {
+        enemy.switchSprite('fall')
     }
 
     //Detect for collision
