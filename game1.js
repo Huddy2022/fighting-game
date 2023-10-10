@@ -6,8 +6,6 @@ canvas.height = 673
 
 c.fillRect(0, 0, canvas.width, canvas.height)
 
-const gravity = 0.7
-
 const background = new Sprite({
     position: {
         x: 0,
@@ -15,6 +13,8 @@ const background = new Sprite({
     },
     imageSrc: './img/background.png'
 })
+
+const gravity = 0.7
 
 const ghost = new Sprite({
     position: {
@@ -148,7 +148,7 @@ const enemy = new Fighter({
     },
     attackBox: {
         offset: {
-            x: -150,
+            x: -200,
             y: 50
         },
         width: 150,
