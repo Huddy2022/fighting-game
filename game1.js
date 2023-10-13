@@ -179,6 +179,70 @@ const keys = {
 
 decreaseTimer()
 
+let enemyAttackCooldown = 0;
+let attackCooldownDuration = 60; // Cooldown duration in frames (assuming 60 FPS)
+
+function updateEnemyAI() {
+    const playerPositionX = player.position.x;
+    const enemyPositionX = enemy.position.x;
+    const distanceToPlayer = Math.abs(playerPositionX - enemyPositionX);
+
+    // Follow the player horizontally while maintaining a distance
+    if (distanceToPlayer > 100) {
+        if (playerPositionX < enemyPositionX) {
+            enemy.velocity.x = -3; // Move left
+        } else if (playerPositionX > enemyPositionX) {
+            enemy.velocity.x = 3; // Move right
+        }
+    } else {
+        enemy.velocity.x = 0; // Stop moving horizontally if too close to the player
+    }
+
+    // Implement attacking behavior with cooldown
+    if (distanceToPlayer < 100 && enemyAttackCooldown <= 0) {
+        // If the player is within attack range and the cooldown has expired, perform an attack
+        enemy.attack();
+        enemyAttackCooldown = attackCooldownDuration; // Set the cooldown
+    }
+
+    // Reduce attack cooldown
+    enemyAttackCooldown = Math.max(0, enemyAttackCooldown - 1);
+
+    // Implement jumping behavior (less frequent)
+    if (Math.random() < 0.005 && enemy.position.y === 473) {
+        // Jump with a small probability (0.5% chance) if the enemy is on the ground
+        enemy.velocity.y = -15; // Adjust the jump height by changing the vertical velocity
+    }
+
+    // Update the enemy's position
+    enemy.update();
+
+    // Detect for collision & player get hit
+    if (rectangluarCollison({
+            rectangle1: enemy,
+            rectangle2: player
+        }) && enemy.isAttacking && enemy.frameCurrent === 4) {
+        player.takeHit()
+        enemy.isAttacking = false
+        gsap.to('#playerHealth', {
+            width: player.health + '%'
+        })
+
+        // If enemy misses
+        if (enemy.isAttacking && enemy.frameCurrent === 4) {
+            enemy.isAttacking = false
+        }
+
+        if (enemy.health <= 0 || player.health <= 0) {
+            determineWinner({
+                player,
+                enemy,
+                timerId
+            });
+        }
+    }
+}
+
 function animate() {
     window.requestAnimationFrame(animate)
     c.fillStyle = 'black'
@@ -189,7 +253,24 @@ function animate() {
     c.fillStyle = 'rgba(255, 255, 255, 0.05)'
     c.fillRect(0, 0, canvas.width, canvas.height)
     player.update()
-    enemy.update()
+
+    // Update the enemy's AI
+    updateEnemyAI();
+
+    // Implement AI logic for enemy movement and actions
+    //const randomAction = Math.random();
+    //if (randomAction < 0.2) {
+    //    enemy.velocity.x = -5; // Move left (20% probability)
+    //} else if (randomAction < 0.4) {
+    //    enemy.velocity.x = 5; // Move right (20% probability)
+    //} else if (randomAction < 0.7 && enemy.position.y === 473) {
+    //    enemy.velocity.y = -20; // Jump (30% probability, only if on the ground)
+    //} else if (randomAction < 0.7) {
+    // Attack (20% probability)
+    //   enemy.attack();
+    //}
+
+    //enemy.update()
 
     player.velocity.x = 0
     enemy.velocity.x = 0
@@ -213,24 +294,24 @@ function animate() {
     }
 
     //Enemy movemnet
-    if (keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft') {
-        enemy.velocity.x = -5
-        enemy.switchSprite('run')
-    } else if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
-        enemy.velocity.x = 5
-        enemy.switchSprite('run')
-    } else {
-        enemy.switchSprite('idle')
-    }
+    //if (keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft') {
+    //    enemy.velocity.x = -5
+    //    enemy.switchSprite('run')
+    //} else if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
+    //    enemy.velocity.x = 5
+    //    enemy.switchSprite('run')
+    //} else {
+    //    enemy.switchSprite('idle')
+    //}
 
-    //Enemy Jump
-    if (enemy.velocity.y < 0) {
-        enemy.switchSprite('jump')
-    } else if (enemy.velocity.y > 0) {
-        enemy.switchSprite('fall')
-    }
+    // Enemy Jump
+    //if (enemy.velocity.y < 0) {
+    //    enemy.switchSprite('jump')
+    //} else if (enemy.velocity.y > 0) {
+    //    enemy.switchSprite('fall')
+    //}
 
-    //Detect for collision & enemy get hit
+    // Detect for collision & enemy get hit
     if (rectangluarCollison({
             rectangle1: player,
             rectangle2: enemy
@@ -242,25 +323,10 @@ function animate() {
         })
     }
 
-    //If player misses
+    // If player misses
+
     if (player.isAttacking && player.frameCurrent === 4) {
         player.isAttacking = false
-    }
-
-    if (rectangluarCollison({
-            rectangle1: enemy,
-            rectangle2: player
-        }) && enemy.isAttacking && enemy.frameCurrent === 4) {
-        player.takeHit()
-        enemy.isAttacking = false
-        gsap.to('#playerHealth', {
-            width: player.health + '%'
-        })
-    }
-
-    //If enemy misses
-    if (enemy.isAttacking && enemy.frameCurrent === 4) {
-        enemy.isAttacking = false
     }
 
     if (enemy.health <= 0 || player.health <= 0) {
@@ -271,6 +337,7 @@ function animate() {
         })
 
     }
+
 }
 
 animate()
@@ -328,7 +395,7 @@ window.addEventListener('keyup', (event) => {
     switch (event.key) {
         case 'ArrowRight':
             keys.ArrowRight.pressed = false
-            break
+           break
         case 'ArrowLeft':
             keys.ArrowLeft.pressed = false
             break
