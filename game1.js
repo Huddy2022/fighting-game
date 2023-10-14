@@ -182,18 +182,35 @@ decreaseTimer()
 let enemyAttackCooldown = 0;
 let attackCooldownDuration = 60; // Cooldown duration in frames (assuming 60 FPS)
 
+function displayNextRoundButton() {
+    const nextRoundButton = document.getElementById('startNextRoundButton');
+    nextRoundButton.style.display = 'block';
+}
 
 function updateEnemyAI() {
+
     const playerPositionX = player.position.x;
     const enemyPositionX = enemy.position.x;
     const distanceToPlayer = Math.abs(playerPositionX - enemyPositionX);
 
+    // Check if the enemy is in the "death" state
+    if (enemy.currentSprite === 'death') {
+        enemy.velocity.x = 0;
+        enemy.velocity.y = 0;
+        enemy.isAttacking = false;
+        enemy.switchSprite('death');
+        return;
+    }
+
     // Follow the player horizontally while maintaining a distance
+
     if (distanceToPlayer > 100) {
         if (playerPositionX < enemyPositionX) {
-            enemy.velocity.x = -3; // Move left
+            enemy.velocity.x = -3;
+            enemy.switchSprite('run'); // Move left
         } else if (playerPositionX > enemyPositionX) {
             enemy.velocity.x = 3; // Move right
+            enemy.switchSprite('run');
         }
     } else {
         enemy.velocity.x = 0; // Stop moving horizontally if too close to the player
@@ -223,7 +240,7 @@ function updateEnemyAI() {
         // Implement attacking behavior with cooldown
         if (distanceToPlayer < 100 && enemyAttackCooldown <= 0) {
             enemy.attack();
-            enemyAttackCooldown = attackCooldownDuration; 
+            enemyAttackCooldown = attackCooldownDuration;
         }
 
         // Detect for collision & player get hit

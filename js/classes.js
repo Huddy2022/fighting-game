@@ -94,7 +94,7 @@ class Fighter extends Sprite {
             height: attackBox.height
         }
         this.color = color
-        this.isAttacking
+        this.isAttacking = false
         this.health = 100
         this.frameCurrent = 0
         this.frameElapsed = 0

@@ -13,52 +13,33 @@ function rectangluarCollison({
     )
 }
 
-function determineWinner({ player, enemy, timerId }) {
+
+function determineWinner({
+    player,
+    enemy,
+    timerId
+}) {
     clearTimeout(timerId);
     document.querySelector('#displayText').style.display = 'flex';
+
     if (player.health === enemy.health) {
         document.querySelector('#displayText').innerHTML = 'Tie';
+        displayNextRoundButton();
     } else if (player.health > enemy.health) {
         document.querySelector('#displayText').innerHTML = 'Player 1 Wins';
         enemy.switchSprite('death');
         playerRoundsWon++;
         displayStars(playerRoundsWon, '#playerStars');
-        startNewRound()
+        displayNextRoundButton();
+        console.log(playerRoundsWon)
     } else if (enemy.health > player.health) {
         document.querySelector('#displayText').innerHTML = 'Enemy Wins';
         enemy.switchSprite('idle');
         enemyRoundsWon++;
         displayStars(enemyRoundsWon, '#enemyStars');
-        startNewRound()
+        displayNextRoundButton();
     }
 
-    // Check if any player has won 2 rounds to end the game, otherwise start a new round
-    if (playerRoundsWon >= 2 || enemyRoundsWon >= 2) {
-        // Display the overall game result
-        displayGameResult(playerRoundsWon, enemyRoundsWon);
-    } else {
-        // Start a new round immediately
-        startNewRound();
-    }
-}
-
-function startNewRound() {
-    // Reset player and enemy health, animation states, and other necessary game state variables
-    player.health = 100;
-    enemy.health = 100;
-    player.isAttacking = false;
-    enemy.isAttacking = false;
-    player.isTakingHit = false;
-    enemy.isTakingHit = false;
-
-    // Reset the timer and update the UI
-    timer = 60;
-    document.querySelector('#timer').innerHTML = timer;
-
-    // Restart the timer countdown
-    decreaseTimer();
-    // Clear the display text
-    document.querySelector('#displayText').innerHTML = '';
 }
 
 function displayGameResult(playerRoundsWon, enemyRoundsWon) {
