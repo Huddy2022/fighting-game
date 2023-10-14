@@ -22,9 +22,11 @@ function determineWinner({
 
     } else if (player.health > enemy.health) {
         document.querySelector('#displayText').innerHTML = 'Player 1 Wins'
+        enemy.switchSprite('death');
 
     } else if (enemy.health > player.health) {
-        document.querySelector('#displayText').innerHTML = 'Player 2 Wins'
+        document.querySelector('#displayText').innerHTML = 'Enemy Wins'
+        enemy.switchSprite('idle');
 
     }
 

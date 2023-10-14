@@ -182,6 +182,7 @@ decreaseTimer()
 let enemyAttackCooldown = 0;
 let attackCooldownDuration = 60; // Cooldown duration in frames (assuming 60 FPS)
 
+
 function updateEnemyAI() {
     const playerPositionX = player.position.x;
     const enemyPositionX = enemy.position.x;
@@ -199,7 +200,7 @@ function updateEnemyAI() {
     }
 
     // Implement attacking behavior with cooldown
-    if (distanceToPlayer < 100 && enemyAttackCooldown <= 0) {
+    if (distanceToPlayer < 175 && enemyAttackCooldown <= 0) {
         // If the player is within attack range and the cooldown has expired, perform an attack
         enemy.attack();
         enemyAttackCooldown = attackCooldownDuration; // Set the cooldown
@@ -217,28 +218,32 @@ function updateEnemyAI() {
     // Update the enemy's position
     enemy.update();
 
-    // Detect for collision & player get hit
-    if (rectangluarCollison({
-            rectangle1: enemy,
-            rectangle2: player
-        }) && enemy.isAttacking && enemy.frameCurrent === 4) {
-        player.takeHit()
-        enemy.isAttacking = false
-        gsap.to('#playerHealth', {
-            width: player.health + '%'
-        })
-
-        // If enemy misses
-        if (enemy.isAttacking && enemy.frameCurrent === 4) {
-            enemy.isAttacking = false
+    // Handle enemy attacks only if it is not taking a hit
+    if (!enemy.isTakingHit) {
+        // Implement attacking behavior with cooldown
+        if (distanceToPlayer < 100 && enemyAttackCooldown <= 0) {
+            enemy.attack();
+            enemyAttackCooldown = attackCooldownDuration; 
         }
 
-        if (enemy.health <= 0 || player.health <= 0) {
-            determineWinner({
-                player,
-                enemy,
-                timerId
+        // Detect for collision & player get hit
+        if (rectangluarCollison({
+                rectangle1: enemy,
+                rectangle2: player
+            }) && enemy.isAttacking && enemy.frameCurrent === 4) {
+            player.takeHit();
+            enemy.isAttacking = false;
+            gsap.to('#playerHealth', {
+                width: player.health + '%'
             });
+
+            if (enemy.health <= 0 || player.health <= 0) {
+                determineWinner({
+                    player,
+                    enemy,
+                    timerId
+                });
+            }
         }
     }
 }
@@ -256,19 +261,6 @@ function animate() {
 
     // Update the enemy's AI
     updateEnemyAI();
-
-    // Implement AI logic for enemy movement and actions
-    //const randomAction = Math.random();
-    //if (randomAction < 0.2) {
-    //    enemy.velocity.x = -5; // Move left (20% probability)
-    //} else if (randomAction < 0.4) {
-    //    enemy.velocity.x = 5; // Move right (20% probability)
-    //} else if (randomAction < 0.7 && enemy.position.y === 473) {
-    //    enemy.velocity.y = -20; // Jump (30% probability, only if on the ground)
-    //} else if (randomAction < 0.7) {
-    // Attack (20% probability)
-    //   enemy.attack();
-    //}
 
     //enemy.update()
 
@@ -338,6 +330,8 @@ function animate() {
 
     }
 
+
+
 }
 
 animate()
@@ -362,24 +356,24 @@ window.addEventListener('keydown', (event) => {
         }
     }
 
-    if (!enemy.dead) {
-        switch (event.key) {
-            case 'ArrowRight':
-                keys.ArrowRight.pressed = true
-                enemy.lastKey = 'ArrowRight'
-                break
-            case 'ArrowLeft':
-                keys.ArrowLeft.pressed = true
-                enemy.lastKey = 'ArrowLeft'
-                break
-            case 'ArrowUp':
-                enemy.velocity.y = -20
-                break
-            case 'ArrowDown':
-                enemy.attack()
-                break
-        }
-    }
+    //if (!enemy.dead) {
+    //    switch (event.key) {
+    //        case 'ArrowRight':
+    //            keys.ArrowRight.pressed = true
+    //            enemy.lastKey = 'ArrowRight'
+    //            break
+    //        case 'ArrowLeft':
+    //            keys.ArrowLeft.pressed = true
+    //            enemy.lastKey = 'ArrowLeft'
+    //           break
+    //        case 'ArrowUp':
+    //            enemy.velocity.y = -20
+    //            break
+    //        case 'ArrowDown':
+    //            enemy.attack()
+    //            break
+    //    }
+    //}
 })
 
 window.addEventListener('keyup', (event) => {
@@ -392,12 +386,12 @@ window.addEventListener('keyup', (event) => {
             break
     }
     //enemy keys
-    switch (event.key) {
-        case 'ArrowRight':
-            keys.ArrowRight.pressed = false
-           break
-        case 'ArrowLeft':
-            keys.ArrowLeft.pressed = false
-            break
-    }
+    //switch (event.key) {
+    //    case 'ArrowRight':
+    //        keys.ArrowRight.pressed = false
+    //        break
+    //    case 'ArrowLeft':
+    //        keys.ArrowLeft.pressed = false
+    //        break
+    //}
 })
