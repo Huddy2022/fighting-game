@@ -24,48 +24,30 @@ function determineWinner({
 
     if (player.health === enemy.health) {
         document.querySelector('#displayText').innerHTML = 'Tie';
-        displayNextRoundButton();
+        displayRoundTwoButton();
     } else if (player.health > enemy.health) {
         document.querySelector('#displayText').innerHTML = 'Player 1 Wins';
         enemy.switchSprite('death');
         playerRoundsWon++;
-        displayStars(playerRoundsWon, '#playerStars');
-        displayNextRoundButton();
-        console.log(playerRoundsWon)
+        displayStars(1, '#playerStars');
+        displayRoundTwoButton();
     } else if (enemy.health > player.health) {
         document.querySelector('#displayText').innerHTML = 'Enemy Wins';
         enemy.switchSprite('idle');
         enemyRoundsWon++;
-        displayStars(enemyRoundsWon, '#enemyStars');
-        displayNextRoundButton();
+        displayStars(1, '#enemyStars');
+        displayRoundTwoButton();
     }
-
-}
-
-function displayGameResult(playerRoundsWon, enemyRoundsWon) {
-    // Determine and display the overall game result (e.g., "Player Wins" or "Enemy Wins")
-    // Reset playerRoundsWon and enemyRoundsWon if you want to play another game
-    if (playerRoundsWon >= 2) {
-        document.querySelector('#displayText').innerHTML = 'Player Wins the Game!';
-        playerRoundsWon = 0;
-        enemyRoundsWon = 0;
-        // Redirect to index.html or handle game over logic here
-    } else if (enemyRoundsWon >= 2) {
-        document.querySelector('#displayText').innerHTML = 'Enemy Wins the Game!';
-        playerRoundsWon = 0;
-        enemyRoundsWon = 0;
-        // Redirect to index.html or handle game over logic here
-    }
-    // You can redirect to index.html or handle game over logic here
 }
 
 function displayStars(roundsWon, elementId) {
     const starsContainer = document.querySelector(elementId);
     starsContainer.innerHTML = '';
 
-    for (let i = 0; i < roundsWon; i++) {
+    if (roundsWon > 0) {
         const star = document.createElement('i');
         star.classList.add('fas', 'fa-star');
+        star.style.marginTop = '60px';
         starsContainer.appendChild(star);
     }
 }

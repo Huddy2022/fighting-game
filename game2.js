@@ -11,7 +11,7 @@ const background = new Sprite({
         x: 0,
         y: 0
     },
-    imageSrc: './img/background.png'
+    imageSrc: './img/background2.png'
 })
 
 const gravity = 0.7
@@ -109,41 +109,33 @@ const enemy = new Fighter({
         x: -50,
         y: 0
     },
-    imageSrc: './img/wizard/idle.png',
-    scale: 3.5,
-    framesMax: 8,
+    imageSrc: './img/demon/idle.png',
+    scale: 2.5,
+    framesMax: 6,
     offset: {
         x: 375,
-        y: 407
+        y: 220
     },
     sprites: {
         idle: {
-            imageSrc: './img/wizard/idle.png',
-            framesMax: 8
+            imageSrc: './img/demon/idle.png',
+            framesMax: 6
         },
         run: {
-            imageSrc: './img/wizard/run.png',
-            framesMax: 8,
-        },
-        jump: {
-            imageSrc: './img/wizard/jump.png',
-            framesMax: 2,
-        },
-        fall: {
-            imageSrc: './img/wizard/fall.png',
-            framesMax: 2,
+            imageSrc: './img/demon/walk.png',
+            framesMax: 24,
         },
         attack1: {
-            imageSrc: './img/wizard/attack1.png',
-            framesMax: 8,
+            imageSrc: './img/demon/attack.png',
+            framesMax: 15,
         },
         takeHit: {
-            imageSrc: './img/wizard/take_hit.png',
-            framesMax: 3,
+            imageSrc: './img/demon/take_hit.png',
+            framesMax: 5,
         },
         death: {
-            imageSrc: './img/wizard/death.png',
-            framesMax: 7,
+            imageSrc: './img/demon/death.png',
+            framesMax: 18,
         }
     },
     attackBox: {
@@ -151,7 +143,7 @@ const enemy = new Fighter({
             x: -200,
             y: 50
         },
-        width: 150,
+        width: 175,
         height: 50
     },
 })
@@ -182,6 +174,7 @@ decreaseTimer()
 let enemyAttackCooldown = 0;
 let attackCooldownDuration = 60; // Cooldown duration in frames (assuming 60 FPS)
 
+
 function updateEnemyAI() {
 
     const playerPositionX = player.position.x;
@@ -199,12 +192,12 @@ function updateEnemyAI() {
 
     // Follow the player horizontally while maintaining a distance
 
-    if (distanceToPlayer > 100) {
+    if (distanceToPlayer > 200) {
         if (playerPositionX < enemyPositionX) {
-            enemy.velocity.x = -3;
+            enemy.velocity.x = -5;
             enemy.switchSprite('run'); // Move left
         } else if (playerPositionX > enemyPositionX) {
-            enemy.velocity.x = 3; // Move right
+            enemy.velocity.x = 5; // Move right
             enemy.switchSprite('run');
         }
     } else {
@@ -212,8 +205,9 @@ function updateEnemyAI() {
     }
 
     // Implement attacking behavior with cooldown
-    if (distanceToPlayer < 175 && enemyAttackCooldown <= 0) {
+    if (distanceToPlayer < 210 && enemyAttackCooldown <= 0) {
         // If the player is within attack range and the cooldown has expired, perform an attack
+        enemy.framesHold = 3;
         enemy.attack();
         enemyAttackCooldown = attackCooldownDuration; // Set the cooldown
     }
@@ -242,7 +236,7 @@ function updateEnemyAI() {
         if (rectangluarCollison({
                 rectangle1: enemy,
                 rectangle2: player
-            }) && enemy.isAttacking && enemy.frameCurrent === 4) {
+            }) && enemy.isAttacking && enemy.frameCurrent === 10) {
             player.takeHit();
             enemy.isAttacking = false;
             gsap.to('#playerHealth', {
@@ -320,8 +314,7 @@ function animate() {
             rectangle1: player,
             rectangle2: enemy
         }) && player.isAttacking && player.frameCurrent === 4) {
-        enemy.takeHit()
-        player.velocity.x = -3;
+        enemy.takeHit();
         player.isAttacking = false
         gsap.to('#enemyHealth', {
             width: enemy.health + '%'
@@ -343,8 +336,6 @@ function animate() {
 
     }
 
-
-
 }
 
 function displayRoundTwoButton() {
@@ -357,7 +348,7 @@ function newGame() {
     playerRoundsWon = 0;
     enemyRoundsWon = 0;
     player.health = 100; // Reset player health
-    enemy.health = 100;  // Reset enemy health
+    enemy.health = 100; // Reset enemy health
 
     // Start the game loop
     animate();
