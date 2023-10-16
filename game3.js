@@ -11,7 +11,7 @@ const background = new Sprite({
         x: 0,
         y: 0
     },
-    imageSrc: './img/background2.png'
+    imageSrc: './img/background3.png'
 })
 
 const gravity = 0.7
@@ -109,33 +109,33 @@ const enemy = new Fighter({
         x: -50,
         y: 0
     },
-    imageSrc: './img/demon/idle.png',
-    scale: 2.5,
-    framesMax: 6,
+    imageSrc: './img/evil_wizard/idle.png',
+    scale: 4.5,
+    framesMax: 8,
     offset: {
         x: 375,
-        y: 220
+        y: 270
     },
     sprites: {
         idle: {
-            imageSrc: './img/demon/idle.png',
-            framesMax: 6
+            imageSrc: './img/evil_wizard/idle.png',
+            framesMax: 8
         },
         run: {
-            imageSrc: './img/demon/walk.png',
-            framesMax: 24,
+            imageSrc: './img/evil_wizard/run.png',
+            framesMax: 8,
         },
         attack1: {
-            imageSrc: './img/demon/attack.png',
-            framesMax: 15,
+            imageSrc: './img/evil_wizard/attack.png',
+            framesMax: 8,
         },
         takeHit: {
-            imageSrc: './img/demon/take_hit.png',
-            framesMax: 5,
+            imageSrc: './img/evil_wizard/take hit.png',
+            framesMax: 4,
         },
         death: {
-            imageSrc: './img/demon/death.png',
-            framesMax: 18,
+            imageSrc: './img/evil_wizard/death.png',
+            framesMax: 5,
         }
     },
     attackBox: {
@@ -143,7 +143,7 @@ const enemy = new Fighter({
             x: -200,
             y: 50
         },
-        width: 175,
+        width: 200,
         height: 50
     },
 })
@@ -173,7 +173,6 @@ decreaseTimer()
 
 let enemyAttackCooldown = 0;
 let attackCooldownDuration = 60; // Cooldown duration in frames (assuming 60 FPS)
-
 
 function updateEnemyAI() {
 
@@ -207,7 +206,6 @@ function updateEnemyAI() {
     // Implement attacking behavior with cooldown
     if (distanceToPlayer < 210 && enemyAttackCooldown <= 0) {
         // If the player is within attack range and the cooldown has expired, perform an attack
-        enemy.framesHold = 3;
         enemy.attack();
         enemyAttackCooldown = attackCooldownDuration; // Set the cooldown
     }
@@ -227,7 +225,7 @@ function updateEnemyAI() {
     // Handle enemy attacks only if it is not taking a hit
     if (!enemy.isTakingHit) {
         // Implement attacking behavior with cooldown
-        if (distanceToPlayer < 100 && enemyAttackCooldown <= 0) {
+        if (distanceToPlayer < 200 && enemyAttackCooldown <= 0) {
             enemy.attack();
             enemyAttackCooldown = attackCooldownDuration;
         }
@@ -236,7 +234,7 @@ function updateEnemyAI() {
         if (rectangluarCollison({
                 rectangle1: enemy,
                 rectangle2: player
-            }) && enemy.isAttacking && enemy.frameCurrent === 10) {
+            }) && enemy.isAttacking && enemy.frameCurrent === 1) {
             player.takeHit();
             enemy.isAttacking = false;
             gsap.to('#playerHealth', {
@@ -314,7 +312,8 @@ function animate() {
             rectangle1: player,
             rectangle2: enemy
         }) && player.isAttacking && player.frameCurrent === 4) {
-        enemy.takeHit();
+        enemy.takeHit()
+        player.velocity.x = -3;
         player.isAttacking = false
         gsap.to('#enemyHealth', {
             width: enemy.health + '%'
@@ -336,11 +335,13 @@ function animate() {
 
     }
 
+
+
 }
 
 function displayNextRoundButton() {
-    const roundThreeButton = document.getElementById('startRoundThree');
-    roundThreeButton.style.display = 'block';
+    const finalRoundButton = document.getElementById('startFinalRound');
+    finalRoundButton.style.display = 'block';
 }
 
 
@@ -348,7 +349,7 @@ function newGame() {
     playerRoundsWon = 0;
     enemyRoundsWon = 0;
     player.health = 100; // Reset player health
-    enemy.health = 100; // Reset enemy health
+    enemy.health = 100;  // Reset enemy health
 
     // Start the game loop
     animate();

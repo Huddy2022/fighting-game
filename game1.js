@@ -347,7 +347,7 @@ function animate() {
 
 }
 
-function displayRoundTwoButton() {
+function displayNextRoundButton() {
     const roundTwoButton = document.getElementById('startRoundTwo');
     roundTwoButton.style.display = 'block';
 }

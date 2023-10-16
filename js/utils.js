@@ -24,19 +24,19 @@ function determineWinner({
 
     if (player.health === enemy.health) {
         document.querySelector('#displayText').innerHTML = 'Tie';
-        displayRoundTwoButton();
+        displayNextRoundButton();
     } else if (player.health > enemy.health) {
         document.querySelector('#displayText').innerHTML = 'Player 1 Wins';
         enemy.switchSprite('death');
         playerRoundsWon++;
         displayStars(1, '#playerStars');
-        displayRoundTwoButton();
+        displayNextRoundButton();
     } else if (enemy.health > player.health) {
         document.querySelector('#displayText').innerHTML = 'Enemy Wins';
         enemy.switchSprite('idle');
         enemyRoundsWon++;
         displayStars(1, '#enemyStars');
-        displayRoundTwoButton();
+        displayNextRoundButton();
     }
 }
 
