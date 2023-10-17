@@ -24,6 +24,7 @@
         <source src="./audio/game_3.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
+    <button id="playButton">Pause Music</button>
     <!--Red container div-->
     <div style="position: relative; display: inline-block">
         <div style="position: absolute; display: flex; width: 100%; align-items: center; padding: 20px;">
@@ -59,6 +60,23 @@
         <canvas></canvas>
     </div>
 </body>
+<script>
+    const audio = document.getElementById('bgMusic');
+    const playButton = document.getElementById('playButton');
+
+    playButton.addEventListener('click', function() {
+        if (audio.paused) {
+            audio.play().catch(error => {
+                // Autoplay was prevented. You can handle this situation, e.g., by displaying a message to the user.
+                console.error('Autoplay prevented:', error);
+            });
+            playButton.textContent = 'Pause Music';
+        } else {
+            audio.pause();
+            playButton.textContent = 'Play Music';
+        }
+    });
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"
     integrity="sha512-16esztaSRplJROstbIIdwX3N97V1+pZvV33ABoG1H2OyTttBxEGkTsoIVsiP1iaTtM8b3+hu2kB6pQ4Clr5yug=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
