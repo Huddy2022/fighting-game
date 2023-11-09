@@ -24,7 +24,6 @@
         <source src="./audio/game_1.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
-    <button id="playButton">Pause Music</button>
     <!--Red container div-->
     <div style="position: relative; display: inline-block">
         <div style="position: absolute; display: flex; width: 100%; align-items: center; padding: 20px;">
@@ -53,7 +52,9 @@
             style="position: absolute; color: white; align-items: center; justify-content: center; top: 0; bottom: 0; left: 0; right: 0; display: none;">
             Tie
         </div>
-        <a href="game2.html"><button id="startRoundTwo" style="display: none; position: absolute;">Start Round 2</button></a>
+        <a href="game2.html"><button id="startRoundTwo" style="display: none; position: absolute; top: 5px;">Start Round
+                2</button></a>
+        <button id="playButton" style="position: absolute; top: 5px; right: 20px;">Pause Music</button>
 
         <canvas></canvas>
     </div>
@@ -62,7 +63,7 @@
     const audio = document.getElementById('bgMusic');
     const playButton = document.getElementById('playButton');
 
-    playButton.addEventListener('click', function() {
+    playButton.addEventListener('click', function () {
         if (audio.paused) {
             audio.play().catch(error => {
                 // Autoplay was prevented. You can handle this situation, e.g., by displaying a message to the user.

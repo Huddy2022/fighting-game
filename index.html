@@ -11,18 +11,19 @@
 <body>
     <div class="container">
         <a href="game1.html" class="start-button">Start Game</a>
+        <button id="playButton" style="position: absolute; top: 20px; left: 920px;">Pause Music</button>
     </div>
     <audio id="bgMusic" loop autoplay>
         <source src="./audio/home.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
-    <button id="playButton">Pause Music</button>
+
 </body>
 <script>
     const audio = document.getElementById('bgMusic');
     const playButton = document.getElementById('playButton');
 
-    playButton.addEventListener('click', function() {
+    playButton.addEventListener('click', function () {
         if (audio.paused) {
             audio.play().catch(error => {
                 // Autoplay was prevented. You can handle this situation, e.g., by displaying a message to the user.
@@ -35,4 +36,5 @@
         }
     });
 </script>
+
 </html>
