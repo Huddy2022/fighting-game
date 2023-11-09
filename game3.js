@@ -312,6 +312,7 @@ function animate() {
             rectangle1: player,
             rectangle2: enemy
         }) && player.isAttacking && player.frameCurrent === 4) {
+        enemy.switchSprite('takeHit')
         enemy.takeHit()
         player.velocity.x = -3;
         player.isAttacking = false
@@ -349,7 +350,7 @@ function newGame() {
     playerRoundsWon = 0;
     enemyRoundsWon = 0;
     player.health = 100; // Reset player health
-    enemy.health = 100;  // Reset enemy health
+    enemy.health = 100; // Reset enemy health
 
     // Start the game loop
     animate();

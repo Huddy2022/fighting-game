@@ -314,7 +314,8 @@ function animate() {
             rectangle1: player,
             rectangle2: enemy
         }) && player.isAttacking && player.frameCurrent === 4) {
-        enemy.takeHit();
+        enemy.switchSprite('takeHit')
+        enemy.takeHit()
         player.isAttacking = false
         gsap.to('#enemyHealth', {
             width: enemy.health + '%'
