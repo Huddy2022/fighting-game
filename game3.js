@@ -193,10 +193,10 @@ function updateEnemyAI() {
 
     if (distanceToPlayer > 200) {
         if (playerPositionX < enemyPositionX) {
-            enemy.velocity.x = -5;
+            enemy.velocity.x = -7;
             enemy.switchSprite('run'); // Move left
         } else if (playerPositionX > enemyPositionX) {
-            enemy.velocity.x = 5; // Move right
+            enemy.velocity.x = 7; // Move right
             enemy.switchSprite('run');
         }
     } else {
