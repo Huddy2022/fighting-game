@@ -127,11 +127,17 @@ class Fighter extends Sprite {
         this.position.x += this.velocity.x
         this.position.y += this.velocity.y
 
-        // Restrict player and enemy within the canvas width
+        // Restrict player and enemy within the canvas width & height
         if (this.position.x < 0) {
             this.position.x = 0;
         } else if (this.position.x + this.width > canvas.width) {
             this.position.x = canvas.width - this.width;
+        }
+
+        if (this.position.y < 0) {
+            this.position.y = 0;
+        } else if (this.position.y + this.height > canvas.height) {
+            this.position.y = canvas.height - this.height;
         }
 
         //Gravity function
