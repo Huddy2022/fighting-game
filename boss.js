@@ -380,7 +380,7 @@ function animate() {
 }
 
 function displayNextRoundButton() {
-    const finalRoundButton = document.getElementById('startFinalRound');
+    const finalRoundButton = document.getElementById('gameOver');
     finalRoundButton.style.display = 'block';
 }
 
