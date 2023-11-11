@@ -306,6 +306,11 @@ function animate() {
     player.velocity.x = 0
     enemy.velocity.x = 0
 
+    // Execute key down function to escape back to home page
+    if (escapeKeyPressed) {
+        window.location.href = 'index.html';
+    }
+
     //Player movemnet
     if (keys.a.pressed && player.lastKey === 'a') {
         player.velocity.x = -5
@@ -393,7 +398,14 @@ function newGame() {
 
 newGame()
 
+let escapeKeyPressed = false;
+
 window.addEventListener('keydown', (event) => {
+
+    if (event.key === 'Escape') {
+        escapeKeyPressed = true;
+    }
+
     if (!player.dead) {
         switch (event.key) {
             case 'd':
@@ -412,28 +424,14 @@ window.addEventListener('keydown', (event) => {
                 break
         }
     }
-
-    //if (!enemy.dead) {
-    //    switch (event.key) {
-    //        case 'ArrowRight':
-    //            keys.ArrowRight.pressed = true
-    //            enemy.lastKey = 'ArrowRight'
-    //            break
-    //        case 'ArrowLeft':
-    //            keys.ArrowLeft.pressed = true
-    //            enemy.lastKey = 'ArrowLeft'
-    //           break
-    //        case 'ArrowUp':
-    //            enemy.velocity.y = -20
-    //            break
-    //        case 'ArrowDown':
-    //            enemy.attack()
-    //            break
-    //    }
-    //}
 })
 
 window.addEventListener('keyup', (event) => {
+
+    if (event.key === 'Escape') {
+        escapeKeyPressed = false;
+    }
+
     switch (event.key) {
         case 'd':
             keys.d.pressed = false
@@ -442,13 +440,4 @@ window.addEventListener('keyup', (event) => {
             keys.a.pressed = false
             break
     }
-    //enemy keys
-    //switch (event.key) {
-    //    case 'ArrowRight':
-    //        keys.ArrowRight.pressed = false
-    //        break
-    //    case 'ArrowLeft':
-    //        keys.ArrowLeft.pressed = false
-    //        break
-    //}
 })
