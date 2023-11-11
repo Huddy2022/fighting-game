@@ -156,8 +156,6 @@ const enemy = new Fighter({
     },
 })
 
-console.log(player)
-
 const keys = {
     a: {
         pressed: false
@@ -176,8 +174,6 @@ const keys = {
     }
 
 }
-
-decreaseTimer()
 
 let enemyAttackCooldown = 0;
 let attackCooldownDuration = 60; // Cooldown duration in frames (assuming 60 FPS)
@@ -263,6 +259,35 @@ function updateEnemyAI() {
 
     // Update the enemy's position
     enemy.update();
+}
+
+let preGameTimer = 3;
+let preGameText = 'FIGHT!';
+let preGameTimerId;
+
+function startPreGameTimer() {
+    const preGameTextElement = document.querySelector('#preGameText');
+    preGameTimerId = setInterval(() => {
+        if (preGameTimer > 0) {
+            document.querySelector('#preGameTimer').innerHTML = preGameTimer;
+            preGameTimer--;
+        } else {
+            preGameTextElement.innerHTML = preGameText;
+            document.querySelector('#preGameTimer').style.display = 'none';
+            clearInterval(preGameTimerId);
+
+            // Optionally: Hide the preGameText after a short delay
+            setTimeout(() => {
+                preGameTextElement.style.display = 'none';
+                startGame();
+            }, 1000);
+        }
+    }, 1000);
+}
+
+function startGame() {
+    decreaseTimer();
+    animate();
 }
 
 function animate() {
@@ -366,7 +391,11 @@ function newGame() {
     player.health = 100; // Reset player health
     enemy.health = 100; // Reset enemy health
 
-    animate();
+    // Show the canvas and hide the pre-game timer
+    document.querySelector('#preGameTimer').style.display = 'block';
+
+    // Start the pre-game timer
+    startPreGameTimer();
 
 }
 
