@@ -189,67 +189,74 @@ function updateEnemyAI() {
         return;
     }
 
-    // Follow the player horizontally while maintaining a distance
+    // Check if the enemy is on the ground
+    const isEnemyOnGround = enemy.position.y === 473;
 
-    if (distanceToPlayer > 200) {
-        if (playerPositionX < enemyPositionX) {
-            enemy.velocity.x = -9;
-            enemy.switchSprite('run'); // Move left
-        } else if (playerPositionX > enemyPositionX) {
-            enemy.velocity.x = 9; // Move right
-            enemy.switchSprite('run');
+    if (isEnemyOnGround) {
+        // Follow the player horizontally while maintaining a distance
+
+        if (distanceToPlayer > 200) {
+            if (playerPositionX < enemyPositionX) {
+                enemy.velocity.x = -9;
+                enemy.switchSprite('run'); // Move left
+            } else if (playerPositionX > enemyPositionX) {
+                enemy.velocity.x = 9; // Move right
+                enemy.switchSprite('run');
+            }
+        } else {
+            enemy.velocity.x = 0; // Stop moving horizontally if too close to the player
         }
-    } else {
-        enemy.velocity.x = 0; // Stop moving horizontally if too close to the player
-    }
 
-    // Implement attacking behavior with cooldown
-    if (distanceToPlayer < 210 && enemyAttackCooldown <= 0) {
-        // If the player is within attack range and the cooldown has expired, perform an attack
-        enemy.attack();
-        enemyAttackCooldown = attackCooldownDuration; // Set the cooldown
-    }
+        // Implement attacking behavior with cooldown
+        if (distanceToPlayer < 210 && enemyAttackCooldown <= 0) {
+            // If the player is within attack range and the cooldown has expired, perform an attack
+            enemy.attack();
+            enemyAttackCooldown = attackCooldownDuration; // Set the cooldown
+        }
 
-    // Reduce attack cooldown
-    enemyAttackCooldown = Math.max(0, enemyAttackCooldown - 1);
+        // Reduce attack cooldown
+        enemyAttackCooldown = Math.max(0, enemyAttackCooldown - 1);
 
-    // Implement jumping behavior (less frequent)
-    if (Math.random() < 0.005 && enemy.position.y === 473) {
-        // Jump with a small probability (0.5% chance) if the enemy is on the ground
-        enemy.velocity.y = -15; // Adjust the jump height by changing the vertical velocity
+        // Implement jumping behavior (less frequent)
+        if (Math.random() < 0.005 && enemy.position.y === 473) {
+            // Jump with a small probability (0.5% chance) if the enemy is on the ground
+            enemy.velocity.y = -15; // Adjust the jump height by changing the vertical velocity
+        }
+
+        // Handle enemy attacks only if it is not taking a hit
+        if (!enemy.isTakingHit) {
+            // Implement attacking behavior with cooldown
+            if (distanceToPlayer < 100 && enemyAttackCooldown <= 0) {
+                enemy.attack();
+                enemyAttackCooldown = attackCooldownDuration;
+            }
+
+            // Detect for collision & player get hit
+            if (rectangluarCollison({
+                    rectangle1: enemy,
+                    rectangle2: player
+                }) && enemy.isAttacking && enemy.frameCurrent === 5) {
+                player.takeHit();
+                enemy.isAttacking = false;
+                gsap.to('#playerHealth', {
+                    width: player.health + '%'
+                });
+
+                if (enemy.health <= 0 || player.health <= 0) {
+                    determineWinner({
+                        player,
+                        enemy,
+                        timerId
+                    });
+                }
+            }
+        }
     }
 
     // Update the enemy's position
     enemy.update();
 
-    // Handle enemy attacks only if it is not taking a hit
-    if (!enemy.isTakingHit) {
-        // Implement attacking behavior with cooldown
-        if (distanceToPlayer < 100 && enemyAttackCooldown <= 0) {
-            enemy.attack();
-            enemyAttackCooldown = attackCooldownDuration;
-        }
 
-        // Detect for collision & player get hit
-        if (rectangluarCollison({
-                rectangle1: enemy,
-                rectangle2: player
-            }) && enemy.isAttacking && enemy.frameCurrent === 5) {
-            player.takeHit();
-            enemy.isAttacking = false;
-            gsap.to('#playerHealth', {
-                width: player.health + '%'
-            });
-
-            if (enemy.health <= 0 || player.health <= 0) {
-                determineWinner({
-                    player,
-                    enemy,
-                    timerId
-                });
-            }
-        }
-    }
 }
 
 function animate() {
