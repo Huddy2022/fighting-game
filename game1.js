@@ -365,9 +365,21 @@ function animate() {
 
 }
 
-function displayNextRoundButton() {
+function displayNextRoundButton(player,
+    enemy) {
     const roundTwoButton = document.getElementById('startRoundTwo');
-    roundTwoButton.style.display = 'block';
+    const tryAgainButton = document.getElementById('tryAgain');
+
+    if (player.health === enemy.health) {
+        roundTwoButton.style.display = 'none';
+        tryAgainButton.style.display = 'block';
+    } else if (player.health > enemy.health) {
+        roundTwoButton.style.display = 'block';
+        tryAgainButton.style.display = 'none';
+    } else if (enemy.health > player.health) {
+        roundTwoButton.style.display = 'none';
+        tryAgainButton.style.display = 'block';
+    }
 }
 
 

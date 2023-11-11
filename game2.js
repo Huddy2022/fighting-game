@@ -360,9 +360,21 @@ function animate() {
 
 }
 
-function displayNextRoundButton() {
+function displayNextRoundButton(player,
+    enemy) {
     const roundThreeButton = document.getElementById('startRoundThree');
-    roundThreeButton.style.display = 'block';
+    const tryAgainButton = document.getElementById('tryAgain');
+
+    if (player.health === enemy.health) {
+        roundThreeButton.style.display = 'none';
+        tryAgainButton.style.display = 'block';
+    } else if (player.health > enemy.health) {
+        roundThreeButton.style.display = 'block';
+        tryAgainButton.style.display = 'none';
+    } else if (enemy.health > player.health) {
+        roundThreeButton.style.display = 'none';
+        tryAgainButton.style.display = 'block';
+    }
 }
 
 
