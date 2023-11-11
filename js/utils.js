@@ -26,7 +26,7 @@ function determineWinner({
         document.querySelector('#displayText').innerHTML = 'Tie';
         displayNextRoundButton(player, enemy);
     } else if (player.health > enemy.health) {
-        document.querySelector('#displayText').innerHTML = 'Player 1 Wins';
+        document.querySelector('#displayText').innerHTML = 'Player Wins';
         enemy.switchSprite('death');
         playerRoundsWon++;
         displayNextRoundButton(player, enemy);

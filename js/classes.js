@@ -65,6 +65,7 @@ class Fighter extends Sprite {
             x: 0,
             y: 0
         },
+        damageAmount = 10,  // default damage amount
         sprites,
         attackBox = {
             offset: {},
@@ -101,6 +102,7 @@ class Fighter extends Sprite {
         this.framesHold = 5
         this.sprites = sprites
         this.dead = false
+        this.damageAmount = damageAmount;
 
         for (const sprite in this.sprites) {
             sprites[sprite].image = new Image()
@@ -153,13 +155,12 @@ class Fighter extends Sprite {
         this.isAttacking = true
     }
 
-    takeHit() {
-        this.health -= 10
+    takeHit(attacker) {
+        this.health -= attacker.damageAmount;
 
         if (this.health <= 0) {
             this.switchSprite('death')
-        } // else
-        // this.switchSprite('takeHit')
+        } 
 
     }
 

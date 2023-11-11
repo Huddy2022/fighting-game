@@ -52,6 +52,7 @@ const player = new Fighter({
     imageSrc: './img/samurai/Idle.png',
     scale: 3.5,
     framesMax: 8,
+    damageAmount: 10,
     offset: {
         x: 320,
         y: 250
@@ -112,6 +113,7 @@ const enemy = new Fighter({
     imageSrc: './img/demon/idle.png',
     scale: 2.5,
     framesMax: 6,
+    damageAmount: 15,
     offset: {
         x: 375,
         y: 220
@@ -173,7 +175,7 @@ let enemyAttackCooldown = 0;
 let attackCooldownDuration = 60; // Cooldown duration in frames (assuming 60 FPS)
 
 
-function updateEnemyAI() {
+function updateEnemyAI(player, enemy) {
 
     const playerPositionX = player.position.x;
     const enemyPositionX = enemy.position.x;
@@ -236,7 +238,7 @@ function updateEnemyAI() {
                     rectangle1: enemy,
                     rectangle2: player
                 }) && enemy.isAttacking && enemy.frameCurrent === 10) {
-                player.takeHit();
+                player.takeHit(enemy);
                 enemy.isAttacking = false;
                 gsap.to('#playerHealth', {
                     width: player.health + '%'
@@ -300,7 +302,7 @@ function animate() {
     player.update()
 
     // Update the enemy's AI
-    updateEnemyAI();
+    updateEnemyAI(player, enemy);
 
     //enemy.update()
 
@@ -336,7 +338,7 @@ function animate() {
             rectangle2: enemy
         }) && player.isAttacking && player.frameCurrent === 4) {
         enemy.switchSprite('takeHit')
-        enemy.takeHit()
+        enemy.takeHit(player)
         player.isAttacking = false
         gsap.to('#enemyHealth', {
             width: enemy.health + '%'

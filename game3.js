@@ -52,6 +52,7 @@ const player = new Fighter({
     imageSrc: './img/samurai/Idle.png',
     scale: 3.5,
     framesMax: 8,
+    damageAmount: 10,
     offset: {
         x: 320,
         y: 250
@@ -112,6 +113,7 @@ const enemy = new Fighter({
     imageSrc: './img/evil_wizard/idle.png',
     scale: 4.5,
     framesMax: 8,
+    damageAmount: 20,
     offset: {
         x: 375,
         y: 270
@@ -234,7 +236,7 @@ function updateEnemyAI() {
                     rectangle1: enemy,
                     rectangle2: player
                 }) && enemy.isAttacking && enemy.frameCurrent === 1) {
-                player.takeHit();
+                player.takeHit(enemy);
                 enemy.isAttacking = false;
                 gsap.to('#playerHealth', {
                     width: player.health + '%'
@@ -335,7 +337,7 @@ function animate() {
             rectangle2: enemy
         }) && player.isAttacking && player.frameCurrent === 4) {
         enemy.switchSprite('takeHit')
-        enemy.takeHit()
+        enemy.takeHit(player)
         player.velocity.x = -3;
         player.isAttacking = false
         gsap.to('#enemyHealth', {
