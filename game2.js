@@ -283,6 +283,7 @@ function startPreGameTimer() {
 }
 
 function startGame() {
+    displayStars(1, '#playerStars');
     decreaseTimer();
     animate();
 }
@@ -328,24 +329,6 @@ function animate() {
     } else if (player.velocity.y > 0) {
         player.switchSprite('fall')
     }
-
-    //Enemy movemnet
-    //if (keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft') {
-    //    enemy.velocity.x = -5
-    //    enemy.switchSprite('run')
-    //} else if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
-    //    enemy.velocity.x = 5
-    //    enemy.switchSprite('run')
-    //} else {
-    //    enemy.switchSprite('idle')
-    //}
-
-    // Enemy Jump
-    //if (enemy.velocity.y < 0) {
-    //    enemy.switchSprite('jump')
-    //} else if (enemy.velocity.y > 0) {
-    //    enemy.switchSprite('fall')
-    //}
 
     // Detect for collision & enemy get hit
     if (rectangluarCollison({

@@ -29,7 +29,6 @@ function determineWinner({
         document.querySelector('#displayText').innerHTML = 'Player 1 Wins';
         enemy.switchSprite('death');
         playerRoundsWon++;
-        displayStars(1, '#playerStars');
         displayNextRoundButton();
     } else if (enemy.health > player.health) {
         document.querySelector('#displayText').innerHTML = 'Enemy Wins';
@@ -40,14 +39,18 @@ function determineWinner({
     }
 }
 
-function displayStars(roundsWon, elementId) {
+function displayStars(count, elementId) {
     const starsContainer = document.querySelector(elementId);
     starsContainer.innerHTML = '';
 
-    if (roundsWon > 0) {
+    for (let i = 0; i < count; i++) {
         const star = document.createElement('i');
         star.classList.add('fas', 'fa-star');
         star.style.marginTop = '60px';
+
+        // Adjust the margin-right to create space between stars
+        star.style.marginRight = '5px';
+
         starsContainer.appendChild(star);
     }
 }
