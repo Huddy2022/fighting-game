@@ -1,6 +1,13 @@
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 
+let playerData = {
+    playerName: '',
+    roundsWon: 0,
+    totalGameTime: 0, // in seconds
+    gameStartTime: 60, // timestamp when the game started
+};
+
 canvas.width = 1024
 canvas.height = 673
 
@@ -372,13 +379,55 @@ function displayNextRoundButton(player,
     if (player.health === enemy.health) {
         finalRoundButton.style.display = 'none';
         tryAgainButton.style.display = 'block';
+        gameOver();
     } else if (player.health > enemy.health) {
         finalRoundButton.style.display = 'block';
         tryAgainButton.style.display = 'none';
     } else if (enemy.health > player.health) {
         finalRoundButton.style.display = 'none';
         tryAgainButton.style.display = 'block';
+        gameOver();
     }
+}
+
+// Call this function when the game is over
+function saveLeaderboardData() {
+    // Save player data to localStorage
+    localStorage.setItem('playerData', JSON.stringify(playerData));
+}
+
+function gameOver() {
+    const tryAgainButton = document.getElementById('tryAgain');
+    const gameEndTimeElement = document.getElementById('timer');
+    const gameEndTime = parseInt(gameEndTimeElement.textContent, 10);
+    const gameStartTime = 60;
+
+    playerData.roundsWon = 3;
+
+    playerData.totalGameTime = gameStartTime - gameEndTime;
+
+    // Save leaderboard data
+    saveLeaderboardData();
+
+    tryAgainButton.style.display = 'block';
+
+}
+
+function wonGame() {
+    const finalRoundButton = document.getElementById('gameOver');
+    const gameEndTimeElement = document.getElementById('timer');
+    const gameEndTime = parseInt(gameEndTimeElement.textContent, 10);
+    const gameStartTime = 60;
+
+    playerData.roundsWon = 4;
+
+    playerData.totalGameTime = gameStartTime - gameEndTime;
+
+    // Save leaderboard data
+    saveLeaderboardData();
+
+    finalRoundButton.style.display = 'block';
+
 }
 
 
