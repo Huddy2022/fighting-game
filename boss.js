@@ -52,7 +52,7 @@ const player = new Fighter({
     imageSrc: './img/samurai/Idle.png',
     scale: 3.5,
     framesMax: 8,
-    damageAmount: 10,
+    damageAmount: 6.65,
     offset: {
         x: 320,
         y: 250
@@ -113,7 +113,7 @@ const enemy = new Fighter({
     imageSrc: './img/boss/idle.png',
     scale: 3.5,
     framesMax: 8,
-    damageAmount: 25,
+    damageAmount: 20,
     offset: {
         x: 375,
         y: 146
@@ -335,7 +335,7 @@ function animate() {
     if (rectangluarCollison({
             rectangle1: player,
             rectangle2: enemy
-        }) && player.isAttacking && player.frameCurrent === 4) {
+        }) && player.isAttacking && player.frameCurrent === 2) {
         enemy.switchSprite('takeHit')
         enemy.takeHit(player)
         player.velocity.x = -3;

@@ -52,7 +52,7 @@ const player = new Fighter({
     imageSrc: './img/samurai/Idle.png',
     scale: 3.5,
     framesMax: 8,
-    damageAmount: 10,
+    damageAmount: 5,
     offset: {
         x: 320,
         y: 250
@@ -113,7 +113,7 @@ const enemy = new Fighter({
     imageSrc: './img/evil_wizard/idle.png',
     scale: 4.5,
     framesMax: 8,
-    damageAmount: 20,
+    damageAmount: 15,
     offset: {
         x: 375,
         y: 270

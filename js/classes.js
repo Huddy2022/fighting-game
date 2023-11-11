@@ -65,7 +65,7 @@ class Fighter extends Sprite {
             x: 0,
             y: 0
         },
-        damageAmount = 10,  // default damage amount
+        damageAmount = 5,  // default damage amount
         sprites,
         attackBox = {
             offset: {},
