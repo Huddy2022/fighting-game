@@ -11,16 +11,33 @@ body {
     height: 673px;
     display: flex;
     align-items: center;
+    flex-direction: column;
     justify-content: center;
 }
 
-.start-button {
+.start-button, .leaderboard-button {
     font-size: 24px;
     background-color: #4caf50;
     color: white;
     padding: 20px 40px;
     text-decoration: none;
     border-radius: 10px;
+}
+
+#playerNameInput {
+    font-size: 18px;
+    padding: 15px;
+    margin-top: 10px;
+    border: 2px solid #4caf50;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+#leaderboardButton {
+    font-size: 18px;
+    padding: 10px;
+    margin-top: 10px;
 }
 
 #errorMessage {
@@ -33,4 +50,25 @@ body {
     padding: 10px;
     border-radius: 5px;
     display: none;
+    left: 510px;
+    top: 120px;
+}
+
+.leaderboard-container {
+    display: none;
+    text-align: center;
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Style leaderboard content */
+.leaderboard-container h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.leaderboard-container p {
+    font-size: 18px;
+    margin-bottom: 5px;
 }

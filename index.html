@@ -15,12 +15,54 @@
         <input type="text" id="playerNameInput" placeholder="Enter Your Name" required>
         <div id="errorMessage"></div>
         <!-- Add a container for the leaderboard -->
+        <button class="leaderboard-button" id="leaderboardButton">Show Leaderboard</button>
         <div class="leaderboard-container" style="display: none;">
             <h2>Leaderboard</h2>
-            <p id="leaderboardName"></p>
-            <p id="leaderboardRoundsWon"></p>
-            <p id="leaderboardTotalGameTime"></p>
-            <p id="leaderboardScore"></p>
+            <table>
+                <tr>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Rounds Won</th>
+                    <th>Total Game Time</th>
+                    <th>Score</th>
+                </tr>
+                <tr>
+                    <th>1st</th>
+                    <th id="leaderboardName1"></th>
+                    <th id="leaderboardRoundsWon1"></th>
+                    <th id="leaderboardTotalGameTime1"></th>
+                    <th id="leaderboardScore1"></th>
+                </tr>
+                <tr>
+                    <th>2nd</th>
+                    <th id="leaderboardName2"></th>
+                    <th id="leaderboardRoundsWon2"></th>
+                    <th id="leaderboardTotalGameTime2"></th>
+                    <th id="leaderboardScore2"></th>
+                </tr>
+                <tr>
+                    <th>3rd</th>
+                    <th id="leaderboardName3"></th>
+                    <th id="leaderboardRoundsWon3"></th>
+                    <th id="leaderboardTotalGameTime3"></th>
+                    <th id="leaderboardScore3"></th>
+                </tr>
+                <tr>
+                    <th>4th</th>
+                    <th id="leaderboardName4"></th>
+                    <th id="leaderboardRoundsWon4"></th>
+                    <th id="leaderboardTotalGameTime4"></th>
+                    <th id="leaderboardScore4"></th>
+                </tr>
+                <tr>
+                    <th>5th</th>
+                    <th id="leaderboardName5"></th>
+                    <th id="leaderboardRoundsWon5"></th>
+                    <th id="leaderboardTotalGameTime5"></th>
+                    <th id="leaderboardScore5"></th>
+                </tr>
+            </table>
+            <button class="reset-button" id="resetLeaderboardButton">Reset Leaderboard</button>
         </div>
         <button id="playButton" style="position: absolute; top: 20px; left: 920px;">Pause Music</button>
     </div>
@@ -47,13 +89,18 @@
             playButton.textContent = 'Play Music';
         }
     });
+
+    // Start the game when the "Start Game" button is clicked
+    const leaderboardButton = document.getElementById('leaderboardButton');
+    leaderboardButton.addEventListener('click', displayLeaderboard);
+
     // Display leaderboard on index.html
     function displayLeaderboard() {
         const leaderboardContainer = document.querySelector('.leaderboard-container');
-        const leaderboardName = document.getElementById('leaderboardName');
-        const leaderboardRoundsWon = document.getElementById('leaderboardRoundsWon');
-        const leaderboardTotalGameTime = document.getElementById('leaderboardTotalGameTime');
-        const leaderboardScore = document.getElementById('leaderboardScore');
+
+        // Retrieve existing leaderboard data from localStorage
+        const savedLeaderboardData = localStorage.getItem('leaderboardData');
+        let leaderboardData = savedLeaderboardData ? JSON.parse(savedLeaderboardData) : [];
 
         // Retrieve player data from localStorage
         const savedPlayerData = localStorage.getItem('playerData');
@@ -61,18 +108,59 @@
         if (savedPlayerData) {
             const playerData = JSON.parse(savedPlayerData);
 
-            leaderboardName.textContent = `Name: ${playerData.playerName}`;
-            leaderboardRoundsWon.textContent = `Rounds Won: ${playerData.roundsWon}`;
-            leaderboardTotalGameTime.textContent = `Total Game Time: ${playerData.totalGameTime} seconds`;
-            leaderboardScore.textContent = `Game Score: ${playerData.score}`;
+            // Add the current player data to the leaderboard
+            leaderboardData.push(playerData);
 
-            // Show the leaderboard container
+            // Sort the leaderboard data based on score (descending order)
+            leaderboardData.sort((a, b) => b.score - a.score);
+
+            // Update the table with the top five players
+            for (let i = 0; i < Math.min(5, leaderboardData.length); i++) {
+                const currentPlayer = leaderboardData[i];
+
+                document.getElementById(`leaderboardName${i + 1}`).textContent = currentPlayer.playerName;
+                document.getElementById(`leaderboardRoundsWon${i + 1}`).textContent = currentPlayer.roundsWon;
+                document.getElementById(`leaderboardTotalGameTime${i + 1}`).textContent =
+                    `${currentPlayer.totalGameTime} seconds`;
+                document.getElementById(`leaderboardScore${i + 1}`).textContent = currentPlayer.score;
+            }
+
+            // Toggle the visibility of the leaderboard container
             leaderboardContainer.style.display = 'block';
+
+            // Save the updated leaderboard data back to localStorage
+            localStorage.setItem('leaderboardData', JSON.stringify(leaderboardData));
+
+            // Clear the current player's data from localStorage outside the if block
+            localStorage.removeItem('playerData');
+
+            console.log('Leaderboard updated successfully!');
+        } else {
+            console.log('No player data found.');
         }
+
+        // Toggle the visibility of the leaderboard container
+        leaderboardContainer.style.display = (leaderboardContainer.style.display === 'none' || leaderboardContainer
+            .style.display === '') ? 'block' : 'none';
     }
 
-    // Call displayLeaderboard when the page loads
-    window.addEventListener('load', displayLeaderboard);
+    // Add event listener for the reset leaderboard button
+    const resetLeaderboardButton = document.getElementById('resetLeaderboardButton');
+    resetLeaderboardButton.addEventListener('click', resetLeaderboard);
+
+    // Function to reset the leaderboard
+    function resetLeaderboard() {
+        // Clear the leaderboard data from localStorage
+        localStorage.removeItem('leaderboardData');
+
+        // Update the table to show an empty leaderboard
+        for (let i = 1; i <= 5; i++) {
+            document.getElementById(`leaderboardName${i}`).textContent = '';
+            document.getElementById(`leaderboardRoundsWon${i}`).textContent = '';
+            document.getElementById(`leaderboardTotalGameTime${i}`).textContent = '';
+            document.getElementById(`leaderboardScore${i}`).textContent = '';
+        }
+    }
 
     function startGame() {
         // Extract the player name from the input field
