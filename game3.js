@@ -3,11 +3,13 @@ const c = canvas.getContext('2d')
 
 const gamer = localStorage.getItem('playerName');
 const totalGameTimeFromGame2 = localStorage.getItem('totalGameTime');
+const totalScoreFromGame2 = localStorage.getItem('score');
 
 let playerData = {
     playerName: gamer,
     roundsWon: 0,
-    totalGameTime: 0, // in seconds
+    totalGameTime: 0,
+    score: 0,
 };
 
 canvas.width = 1024
@@ -414,8 +416,31 @@ function gameOver() {
 
     console.log(playerData.totalGameTime);
 
+    // Calculate total score
+    const maxGameTime = 60; // Maximum game time in seconds
+    const minScore = 1201; // Minimum score
+    const maxScore = 1800; // Maximum score
+
+    // Calculate the normalized game time (from 0 to 1)
+    const normalizedGameTime = Math.max(0, Math.min(1, totalTime / maxGameTime));
+
+    // Calculate the score using a linear interpolation
+    const totalScore = Math.round((1 - normalizedGameTime) * (maxScore - minScore) + minScore);
+
+    console.log(totalScore)
+
+    playerData.score = totalScore + parseInt(totalScoreFromGame2, 10);
+
+    console.log(playerData.score)
+
     // Save leaderboard data
     saveLeaderboardData();
+
+    // Store totalGameTime in localStorage
+    localStorage.setItem('totalGameTime', playerData.totalGameTime);
+
+    // Store score in localStorage
+    localStorage.setItem('score', playerData.score);
 
     tryAgainButton.style.display = 'block';
 
@@ -437,11 +462,31 @@ function nextRound() {
 
     console.log(playerData.totalGameTime);
 
+    // Calculate total score
+    const maxGameTime = 60; // Maximum game time in seconds
+    const minScore = 1201; // Minimum score
+    const maxScore = 1800; // Maximum score
+
+    // Calculate the normalized game time (from 0 to 1)
+    const normalizedGameTime = Math.max(0, Math.min(1, totalTime / maxGameTime));
+
+    // Calculate the score using a linear interpolation
+    const totalScore = Math.round((1 - normalizedGameTime) * (maxScore - minScore) + minScore);
+
+    console.log(totalScore)
+
+    playerData.score = totalScore + parseInt(totalScoreFromGame2, 10);
+
+    console.log(playerData.score)
+
     // Save leaderboard data
     saveLeaderboardData();
 
     // Store totalGameTime in localStorage
     localStorage.setItem('totalGameTime', playerData.totalGameTime);
+
+    // Store score in localStorage
+    localStorage.setItem('score', playerData.score);
 
     roundBossButton.style.display = 'block';
 

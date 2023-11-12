@@ -11,22 +11,23 @@
 <body>
     <div class="container">
         <!-- Add this input field to your HTML -->
-        <input type="text" id="playerNameInput" placeholder="Enter Your Name">
-        <a href="game1.html?playerName=" class="start-button" id="startGameButton">Start Game</a>
+        <button class="start-button" id="startGameButton">Start Game</button>
+        <input type="text" id="playerNameInput" placeholder="Enter Your Name" required>
+        <div id="errorMessage"></div>
+        <!-- Add a container for the leaderboard -->
+        <div class="leaderboard-container" style="display: none;">
+            <h2>Leaderboard</h2>
+            <p id="leaderboardName"></p>
+            <p id="leaderboardRoundsWon"></p>
+            <p id="leaderboardTotalGameTime"></p>
+            <p id="leaderboardScore"></p>
+        </div>
         <button id="playButton" style="position: absolute; top: 20px; left: 920px;">Pause Music</button>
     </div>
     <audio id="bgMusic" loop autoplay>
         <source src="./audio/home.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
-
-    <!-- Add a container for the leaderboard -->
-    <div class="leaderboard-container" style="display: none;">
-        <h2>Leaderboard</h2>
-        <p id="leaderboardName"></p>
-        <p id="leaderboardRoundsWon"></p>
-        <p id="leaderboardTotalGameTime"></p>
-    </div>
 
 </body>
 <script>
@@ -52,6 +53,7 @@
         const leaderboardName = document.getElementById('leaderboardName');
         const leaderboardRoundsWon = document.getElementById('leaderboardRoundsWon');
         const leaderboardTotalGameTime = document.getElementById('leaderboardTotalGameTime');
+        const leaderboardScore = document.getElementById('leaderboardScore');
 
         // Retrieve player data from localStorage
         const savedPlayerData = localStorage.getItem('playerData');
@@ -62,6 +64,7 @@
             leaderboardName.textContent = `Name: ${playerData.playerName}`;
             leaderboardRoundsWon.textContent = `Rounds Won: ${playerData.roundsWon}`;
             leaderboardTotalGameTime.textContent = `Total Game Time: ${playerData.totalGameTime} seconds`;
+            leaderboardScore.textContent = `Game Score: ${playerData.score}`;
 
             // Show the leaderboard container
             leaderboardContainer.style.display = 'block';
@@ -76,8 +79,18 @@
         const playerNameInput = document.getElementById('playerNameInput');
         const playerName = playerNameInput.value;
 
+        // Check if the player name is not empty
+        if (playerName.trim() == "") {
+            errorMessage.textContent = "Please enter your name before starting the game.";
+            errorMessage.style.display = "block";
+            return;
+        };
+
         // Save the player name to localStorage
         localStorage.setItem('playerName', playerName);
+
+        // Redirect to game1.html with the player name as a query parameter
+        window.location.href = `game1.html?playerName=${encodeURIComponent(playerName)}`;
     }
 
     // Start the game when the "Start Game" button is clicked
