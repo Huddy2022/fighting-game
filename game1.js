@@ -1,8 +1,12 @@
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 
+const gamer = localStorage.getItem('playerName');
+
+console.log(gamer)
+
 let playerData = {
-    playerName: '',
+    playerName: gamer,
     roundsWon: 0,
     totalGameTime: 0, // in seconds
 };
@@ -382,8 +386,8 @@ function displayNextRoundButton(player,
         roundTwoButton.style.display = 'none';
         gameOver();
     } else if (player.health > enemy.health) {
-        roundTwoButton.style.display = 'block';
         tryAgainButton.style.display = 'none';
+        nextRound();
     } else if (enemy.health > player.health) {
         roundTwoButton.style.display = 'none';
         gameOver();
@@ -413,6 +417,28 @@ function gameOver() {
     localStorage.setItem('totalGameTime', playerData.totalGameTime);
 
     tryAgainButton.style.display = 'block';
+
+}
+
+function nextRound() {
+    const roundTwoButton = document.getElementById('startRoundTwo');
+    const gameEndTimeElement = document.getElementById('timer');
+    const gameEndTime = parseInt(gameEndTimeElement.textContent, 10);
+    const gameStartTime = 60;
+
+    playerData.roundsWon = 0;
+
+    playerData.totalGameTime = gameStartTime - gameEndTime;
+
+    console.log(playerData.totalGameTime)
+
+    // Save leaderboard data
+    saveLeaderboardData();
+
+    // Store totalGameTime in localStorage
+    localStorage.setItem('totalGameTime', playerData.totalGameTime);
+
+    roundTwoButton.style.display = 'block';
 
 }
 

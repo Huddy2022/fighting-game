@@ -76,8 +76,8 @@
         const playerNameInput = document.getElementById('playerNameInput');
         const playerName = playerNameInput.value;
 
-        // Redirect to game1.html with the player name as a query parameter
-        window.location.href = `game1.html?playerName=${encodeURIComponent(playerName)}`;
+        // Save the player name to localStorage
+        localStorage.setItem('playerName', playerName);
     }
 
     // Start the game when the "Start Game" button is clicked

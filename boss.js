@@ -1,11 +1,13 @@
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 
+const gamer = localStorage.getItem('playerName');
+const totalGameTimeFromGame3 = localStorage.getItem('totalGameTime');
+
 let playerData = {
-    playerName: '',
+    playerName: gamer,
     roundsWon: 0,
     totalGameTime: 0, // in seconds
-    gameStartTime: 60, // timestamp when the game started
 };
 
 canvas.width = 1024
@@ -378,14 +380,12 @@ function displayNextRoundButton(player,
 
     if (player.health === enemy.health) {
         finalRoundButton.style.display = 'none';
-        tryAgainButton.style.display = 'block';
         gameOver();
     } else if (player.health > enemy.health) {
-        finalRoundButton.style.display = 'block';
         tryAgainButton.style.display = 'none';
+        wonGame();
     } else if (enemy.health > player.health) {
         finalRoundButton.style.display = 'none';
-        tryAgainButton.style.display = 'block';
         gameOver();
     }
 }
@@ -404,7 +404,15 @@ function gameOver() {
 
     playerData.roundsWon = 3;
 
-    playerData.totalGameTime = gameStartTime - gameEndTime;
+    console.log(totalGameTimeFromGame3);
+
+    const totalTime = gameStartTime - gameEndTime;
+
+    console.log(totalTime);
+
+    playerData.totalGameTime = totalTime + parseInt(totalGameTimeFromGame3, 10);
+
+    console.log(playerData.totalGameTime);
 
     // Save leaderboard data
     saveLeaderboardData();
@@ -421,10 +429,19 @@ function wonGame() {
 
     playerData.roundsWon = 4;
 
-    playerData.totalGameTime = gameStartTime - gameEndTime;
+    const totalTime = gameStartTime - gameEndTime;
+
+    console.log(totalTime);
+
+    playerData.totalGameTime = totalTime + parseInt(totalGameTimeFromGame3, 10);
+
+    console.log(playerData.totalGameTime);
 
     // Save leaderboard data
     saveLeaderboardData();
+
+    // Store totalGameTime in localStorage
+    localStorage.setItem('totalGameTime', playerData.totalGameTime);
 
     finalRoundButton.style.display = 'block';
 

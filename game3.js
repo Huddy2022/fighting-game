@@ -1,11 +1,13 @@
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 
+const gamer = localStorage.getItem('playerName');
+const totalGameTimeFromGame2 = localStorage.getItem('totalGameTime');
+
 let playerData = {
-    playerName: '',
+    playerName: gamer,
     roundsWon: 0,
     totalGameTime: 0, // in seconds
-    gameStartTime: 60, // timestamp when the game started
 };
 
 canvas.width = 1024
@@ -378,14 +380,12 @@ function displayNextRoundButton(player,
 
     if (player.health === enemy.health) {
         finalRoundButton.style.display = 'none';
-        tryAgainButton.style.display = 'block';
         gameOver();
     } else if (player.health > enemy.health) {
-        finalRoundButton.style.display = 'block';
         tryAgainButton.style.display = 'none';
+        nextRound();
     } else if (enemy.health > player.health) {
         finalRoundButton.style.display = 'none';
-        tryAgainButton.style.display = 'block';
         gameOver();
     }
 }
@@ -404,12 +404,46 @@ function gameOver() {
 
     playerData.roundsWon = 2;
 
-    playerData.totalGameTime = gameStartTime - gameEndTime;
+    console.log(totalGameTimeFromGame2);
+
+    const totalTime = gameStartTime - gameEndTime;
+
+    console.log(totalTime);
+
+    playerData.totalGameTime = totalTime + parseInt(totalGameTimeFromGame2, 10);
+
+    console.log(playerData.totalGameTime);
 
     // Save leaderboard data
     saveLeaderboardData();
 
     tryAgainButton.style.display = 'block';
+
+}
+
+function nextRound() {
+    const roundBossButton = document.getElementById('startFinalRound');
+    const gameEndTimeElement = document.getElementById('timer');
+    const gameEndTime = parseInt(gameEndTimeElement.textContent, 10);
+    const gameStartTime = 60;
+
+    playerData.roundsWon = 0;
+
+    const totalTime = gameStartTime - gameEndTime;
+
+    console.log(totalTime);
+
+    playerData.totalGameTime = totalTime + parseInt(totalGameTimeFromGame2, 10);
+
+    console.log(playerData.totalGameTime);
+
+    // Save leaderboard data
+    saveLeaderboardData();
+
+    // Store totalGameTime in localStorage
+    localStorage.setItem('totalGameTime', playerData.totalGameTime);
+
+    roundBossButton.style.display = 'block';
 
 }
 
