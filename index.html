@@ -64,6 +64,18 @@
             </table>
             <button class="reset-button" id="resetLeaderboardButton">Reset Leaderboard</button>
         </div>
+        <!-- Add a button for "How to Play" -->
+        <button class="how-to-play-button" id="howToPlayButton">How to Play</button>
+        <div class="how-to-play-container" style="display: none;">
+            <h2>How to Play</h2>
+            <p>The aim of the game is to beat all the enemies as quickly as you can for the highest score!</p>
+            <p>Game Controls:</p>
+            <ul>
+                <li>Movement: Use 'A' and 'D' keys to move left and right.</li>
+                <li>Jump: Press 'W' to make your character jump.</li>
+                <li>Attack: Press Spacebar to unleash powerful attacks.</li>
+            </ul>
+        </div>
         <button id="playButton" style="position: absolute; top: 20px; left: 920px;">Pause Music</button>
     </div>
     <audio id="bgMusic" loop autoplay>
@@ -133,16 +145,22 @@
 
             // Clear the current player's data from localStorage outside the if block
             localStorage.removeItem('playerData');
-
-            console.log('Leaderboard updated successfully!');
-        } else {
-            console.log('No player data found.');
         }
-
         // Toggle the visibility of the leaderboard container
         leaderboardContainer.style.display = (leaderboardContainer.style.display === 'none' || leaderboardContainer
             .style.display === '') ? 'block' : 'none';
     }
+
+    // Add a click event listener for the "How to Play" button
+    const howToPlayButton = document.getElementById('howToPlayButton');
+        howToPlayButton.addEventListener('click', toggleHowToPlay);
+
+        // Function to toggle the visibility of the "How to Play" container
+        function toggleHowToPlay() {
+            const howToPlayContainer = document.querySelector('.how-to-play-container');
+            howToPlayContainer.style.display = (howToPlayContainer.style.display === 'none' ||
+                howToPlayContainer.style.display === '') ? 'block' : 'none';
+        }
 
     // Add event listener for the reset leaderboard button
     const resetLeaderboardButton = document.getElementById('resetLeaderboardButton');
