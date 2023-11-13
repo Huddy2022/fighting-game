@@ -60,12 +60,31 @@ body {
     top: 120px;
 }
 
-.leaderboard-container, .how-to-play-container {
+.leaderboard-container {
     display: none;
     text-align: center;
     background-color: #f2f2f2;
     padding: 20px;
     border-radius: 10px;
+    position: relative;
+    bottom: 500px;
+    margin-left: 20px;
+    height: 300px;
+    width: 320px;
+}
+
+.how-to-play-container {
+    display: none;
+    text-align: center;
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 10px;
+    position: absolute;
+    left: 650px;
+    bottom: 410px;
+    margin-right: 20px;
+    height: 300px;
+    width: 320px;
 }
 
 /* Style leaderboard content */

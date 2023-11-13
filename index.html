@@ -16,68 +16,69 @@
         <div id="errorMessage"></div>
         <!-- Add a container for the leaderboard -->
         <button class="leaderboard-button" id="leaderboardButton">Show Leaderboard</button>
-        <div class="leaderboard-container" style="display: none;">
-            <h2>Leaderboard</h2>
-            <table>
-                <tr>
-                    <th>Rank</th>
-                    <th>Name</th>
-                    <th>Rounds Won</th>
-                    <th>Total Game Time</th>
-                    <th>Score</th>
-                </tr>
-                <tr>
-                    <th>1st</th>
-                    <th id="leaderboardName1"></th>
-                    <th id="leaderboardRoundsWon1"></th>
-                    <th id="leaderboardTotalGameTime1"></th>
-                    <th id="leaderboardScore1"></th>
-                </tr>
-                <tr>
-                    <th>2nd</th>
-                    <th id="leaderboardName2"></th>
-                    <th id="leaderboardRoundsWon2"></th>
-                    <th id="leaderboardTotalGameTime2"></th>
-                    <th id="leaderboardScore2"></th>
-                </tr>
-                <tr>
-                    <th>3rd</th>
-                    <th id="leaderboardName3"></th>
-                    <th id="leaderboardRoundsWon3"></th>
-                    <th id="leaderboardTotalGameTime3"></th>
-                    <th id="leaderboardScore3"></th>
-                </tr>
-                <tr>
-                    <th>4th</th>
-                    <th id="leaderboardName4"></th>
-                    <th id="leaderboardRoundsWon4"></th>
-                    <th id="leaderboardTotalGameTime4"></th>
-                    <th id="leaderboardScore4"></th>
-                </tr>
-                <tr>
-                    <th>5th</th>
-                    <th id="leaderboardName5"></th>
-                    <th id="leaderboardRoundsWon5"></th>
-                    <th id="leaderboardTotalGameTime5"></th>
-                    <th id="leaderboardScore5"></th>
-                </tr>
-            </table>
-            <button class="reset-button" id="resetLeaderboardButton">Reset Leaderboard</button>
-        </div>
         <!-- Add a button for "How to Play" -->
         <button class="how-to-play-button" id="howToPlayButton">How to Play</button>
-        <div class="how-to-play-container" style="display: none;">
-            <h2>How to Play</h2>
-            <p>The aim of the game is to beat all the enemies as quickly as you can for the highest score!</p>
-            <p>Game Controls:</p>
-            <ul>
-                <li>Movement: Use 'A' and 'D' keys to move left and right.</li>
-                <li>Jump: Press 'W' to make your character jump.</li>
-                <li>Attack: Press Spacebar to unleash powerful attacks.</li>
-            </ul>
-        </div>
         <button id="playButton" style="position: absolute; top: 20px; left: 920px;">Pause Music</button>
     </div>
+    <div class="leaderboard-container" style="display: none;">
+        <h2>Leaderboard</h2>
+        <table>
+            <tr>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Rounds Won</th>
+                <th>Total Game Time</th>
+                <th>Score</th>
+            </tr>
+            <tr>
+                <th>1st</th>
+                <th id="leaderboardName1"></th>
+                <th id="leaderboardRoundsWon1"></th>
+                <th id="leaderboardTotalGameTime1"></th>
+                <th id="leaderboardScore1"></th>
+            </tr>
+            <tr>
+                <th>2nd</th>
+                <th id="leaderboardName2"></th>
+                <th id="leaderboardRoundsWon2"></th>
+                <th id="leaderboardTotalGameTime2"></th>
+                <th id="leaderboardScore2"></th>
+            </tr>
+            <tr>
+                <th>3rd</th>
+                <th id="leaderboardName3"></th>
+                <th id="leaderboardRoundsWon3"></th>
+                <th id="leaderboardTotalGameTime3"></th>
+                <th id="leaderboardScore3"></th>
+            </tr>
+            <tr>
+                <th>4th</th>
+                <th id="leaderboardName4"></th>
+                <th id="leaderboardRoundsWon4"></th>
+                <th id="leaderboardTotalGameTime4"></th>
+                <th id="leaderboardScore4"></th>
+            </tr>
+            <tr>
+                <th>5th</th>
+                <th id="leaderboardName5"></th>
+                <th id="leaderboardRoundsWon5"></th>
+                <th id="leaderboardTotalGameTime5"></th>
+                <th id="leaderboardScore5"></th>
+            </tr>
+        </table>
+        <button class="reset-button" id="resetLeaderboardButton">Reset Leaderboard</button>
+    </div>
+    <div class="how-to-play-container" style="display: none;">
+        <h2>How to Play</h2>
+        <p>The aim of the game is to beat all the enemies as quickly as you can for the highest score!</p>
+        <p>Game Controls:</p>
+        <ul>
+            <li>Movement: Use 'A' and 'D' keys to move left and right.</li>
+            <li>Jump: Press 'W' to make your character jump.</li>
+            <li>Attack: Press Spacebar to unleash powerful attacks.</li>
+        </ul>
+    </div>
+
     <audio id="bgMusic" loop autoplay>
         <source src="./audio/home.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
@@ -153,14 +154,14 @@
 
     // Add a click event listener for the "How to Play" button
     const howToPlayButton = document.getElementById('howToPlayButton');
-        howToPlayButton.addEventListener('click', toggleHowToPlay);
+    howToPlayButton.addEventListener('click', toggleHowToPlay);
 
-        // Function to toggle the visibility of the "How to Play" container
-        function toggleHowToPlay() {
-            const howToPlayContainer = document.querySelector('.how-to-play-container');
-            howToPlayContainer.style.display = (howToPlayContainer.style.display === 'none' ||
-                howToPlayContainer.style.display === '') ? 'block' : 'none';
-        }
+    // Function to toggle the visibility of the "How to Play" container
+    function toggleHowToPlay() {
+        const howToPlayContainer = document.querySelector('.how-to-play-container');
+        howToPlayContainer.style.display = (howToPlayContainer.style.display === 'none' ||
+            howToPlayContainer.style.display === '') ? 'block' : 'none';
+    }
 
     // Add event listener for the reset leaderboard button
     const resetLeaderboardButton = document.getElementById('resetLeaderboardButton');
