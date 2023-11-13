@@ -59,11 +59,18 @@
             style="position: absolute; color: white; align-items: center; justify-content: center; top: 335px; left: 475px; display: block;">
         </div>
         <a href="game2.html"><button id="startRoundTwo"
-                style="display: none; position: absolute; top: 5px; left: 20px;">Start Round
+                style="display: none; position: absolute; top: 5px; left: 20px; cursor: pointer;"
+                onmouseover="this.style.backgroundColor='#ffff00'; this.style.color='#333';"
+                onmouseout="this.style.backgroundColor='#f2f2f2'; this.style.color='black';">Start Round
                 2</button></a>
         <a href="index.html"><button id="tryAgain"
-                style="display: none; position: absolute; top: 5px; left: 20px;">Try Again!</button></a>
-        <button id="playButton" style="position: absolute; top: 5px; right: 20px;">Pause Music</button>
+                style="display: none; position: absolute; top: 5px; left: 20px; cursor: pointer;"
+                onmouseover="this.style.backgroundColor='#ffff00'; this.style.color='#333';"
+                onmouseout="this.style.backgroundColor='#f2f2f2'; this.style.color='black';">Try
+                Again!</button></a>
+        <button id="playButton" style="position: absolute; top: 5px; right: 20px; cursor: pointer;"
+            onmouseover="this.style.backgroundColor='#ffff00'; this.style.color='#333';"
+            onmouseout="this.style.backgroundColor='#f2f2f2'; this.style.color='black';">Pause Music</button>
 
         <canvas></canvas>
     </div>

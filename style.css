@@ -15,13 +15,30 @@ body {
     justify-content: center;
 }
 
-.start-button, .leaderboard-button, .how-to-play-button {
+.start-button, .leaderboard-button, .how-to-play-button, .reset-button {
     font-size: 24px;
     background-color: #4caf50;
     color: white;
     padding: 20px 40px;
     text-decoration: none;
     border-radius: 10px;
+    transition: background-color 0.3s;
+}
+
+.start-button:hover, .leaderboard-button:hover, .how-to-play-button:hover, .reset-button:hover {
+    background-color: #8b0000;
+    cursor: pointer;
+}
+
+#playButton {
+    background-color: #f2f2f2; 
+    color: black;
+}
+
+#playButton:hover {
+    cursor: pointer;
+    background-color: #8b0000;
+    color: white;
 }
 
 #howToPlayButton {
@@ -40,7 +57,7 @@ body {
     transition: border-color 0.3s;
 }
 
-#leaderboardButton {
+#leaderboardButton, #resetLeaderboardButton {
     font-size: 18px;
     padding: 10px;
     margin-top: 10px;
@@ -63,7 +80,7 @@ body {
 .leaderboard-container {
     display: none;
     text-align: center;
-    background-color: #f2f2f2;
+    background-color: #5a5a5a;
     padding: 20px;
     border-radius: 10px;
     position: relative;
@@ -71,29 +88,45 @@ body {
     margin-left: 20px;
     height: 300px;
     width: 320px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
 .how-to-play-container {
     display: none;
     text-align: center;
-    background-color: #f2f2f2;
+    background-color: #5a5a5a;
     padding: 20px;
     border-radius: 10px;
     position: absolute;
     left: 650px;
-    bottom: 410px;
+    bottom: 365px;
     margin-right: 20px;
-    height: 300px;
+    height: 350px;
     width: 320px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
 /* Style leaderboard content */
 .leaderboard-container h2, .how-to-play-container h2 {
     font-size: 24px;
     margin-bottom: 10px;
+    color: #fff;
+}
+
+.how-to-play-container h2 {
+    margin-top: 0px;
 }
 
 .leaderboard-container p, .how-to-play-container li {
     font-size: 18px;
     margin-bottom: 5px;
+    color: #ddd;
+}
+
+.how-to-play-container p {
+    font-size: 18px;
+    color: #000000;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }

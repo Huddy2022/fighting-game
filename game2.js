@@ -511,6 +511,8 @@ window.addEventListener('keydown', (event) => {
 
     if (event.key === 'Escape') {
         escapeKeyPressed = true;
+        // Clear the player's data from localStorage
+        localStorage.removeItem('playerData');
     }
 
     if (!player.dead) {
