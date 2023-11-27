@@ -77,6 +77,10 @@ const player = new Fighter({
             imageSrc: './img/samurai/Run.png',
             framesMax: 8,
         },
+        runReverse: {
+            imageSrc: './img/samurai/runReverse.png',
+            framesMax: 8,
+        },
         jump: {
             imageSrc: './img/samurai/Jump.png',
             framesMax: 2,
@@ -330,10 +334,12 @@ function animate() {
     //Player movemnet
     if (keys.a.pressed && player.lastKey === 'a') {
         player.velocity.x = -5
-        player.switchSprite('run')
+        player.switchSprite('runReverse')
+        player.attackBox.offset.x = -200
     } else if (keys.d.pressed && player.lastKey === 'd') {
         player.velocity.x = 5
         player.switchSprite('run')
+        player.attackBox.offset.x = 100
     } else {
         player.switchSprite('idle')
     }

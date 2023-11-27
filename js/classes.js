@@ -65,7 +65,7 @@ class Fighter extends Sprite {
             x: 0,
             y: 0
         },
-        damageAmount = 5,  // default damage amount
+        damageAmount = 5, // default damage amount
         sprites,
         attackBox = {
             offset: {},
@@ -84,7 +84,7 @@ class Fighter extends Sprite {
         this.velocity = velocity
         this.height = 150
         this.width = 50
-        this.lastKey
+        this.lastKey = null
         this.attackBox = {
             position: {
                 x: this.position.x,
@@ -119,12 +119,12 @@ class Fighter extends Sprite {
         this.attackBox.position.y = this.position.y + this.attackBox.offset.y
 
         // Draw attack boxes
-        //c.fillRect(
-        //    this.attackBox.position.x,
-        //    this.attackBox.position.y,
-        //    this.attackBox.width,
-        //    this.attackBox.height
-        //)
+        c.fillRect(
+            this.attackBox.position.x,
+            this.attackBox.position.y,
+            this.attackBox.width,
+            this.attackBox.height
+        )
 
         this.position.x += this.velocity.x
         this.position.y += this.velocity.y
@@ -160,7 +160,7 @@ class Fighter extends Sprite {
 
         if (this.health <= 0) {
             this.switchSprite('death')
-        } 
+        }
 
     }
 
@@ -198,6 +198,13 @@ class Fighter extends Sprite {
                 if (this.image !== this.sprites.run.image) {
                     this.image = this.sprites.run.image
                     this.framesMax = this.sprites.run.framesMax
+                    this.frameCurrent = 0
+                }
+                break
+            case 'runReverse':
+                if (this.image !== this.sprites.runReverse.image) {
+                    this.image = this.sprites.runReverse.image
+                    this.framesMax = this.sprites.runReverse.framesMax
                     this.frameCurrent = 0
                 }
                 break
