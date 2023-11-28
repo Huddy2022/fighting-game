@@ -108,6 +108,7 @@ class Fighter extends Sprite {
             sprites[sprite].image = new Image()
             sprites[sprite].image.src = sprites[sprite].imageSrc
         }
+        
     }
 
     update() {
@@ -191,6 +192,13 @@ class Fighter extends Sprite {
                 if (this.image !== this.sprites.idle.image) {
                     this.image = this.sprites.idle.image
                     this.framesMax = this.sprites.idle.framesMax
+                    this.frameCurrent = 0
+                }
+                break
+            case 'idleReverse':
+                if (this.image !== this.sprites.idleReverse.image) {
+                    this.image = this.sprites.idleReverse.image
+                    this.framesMax = this.sprites.idleReverse.framesMax
                     this.frameCurrent = 0
                 }
                 break

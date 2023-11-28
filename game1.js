@@ -73,6 +73,10 @@ const player = new Fighter({
             imageSrc: './img/samurai/Idle.png',
             framesMax: 8
         },
+        idleReverse: {
+            imageSrc: './img/samurai/IdleReverse.png',
+            framesMax: 8
+        },
         run: {
             imageSrc: './img/samurai/Run.png',
             framesMax: 8,
@@ -341,7 +345,13 @@ function animate() {
         player.switchSprite('run')
         player.attackBox.offset.x = 100
     } else {
-        player.switchSprite('idle')
+        if (player.lastKey === 'a') {
+            player.switchSprite('idleReverse');
+
+        } else {
+            player.switchSprite('idle');
+
+        }
     }
 
     //Player Jump
