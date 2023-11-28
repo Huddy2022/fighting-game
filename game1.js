@@ -105,6 +105,10 @@ const player = new Fighter({
             imageSrc: './img/samurai/Attack1.png',
             framesMax: 6,
         },
+        attack1Reverse: {
+            imageSrc: './img/samurai/attack1Reverse.png',
+            framesMax: 6,
+        },
         takeHit: {
             imageSrc: './img/samurai/Take Hit - white silhouette.png',
             framesMax: 4,
@@ -163,6 +167,10 @@ const enemy = new Fighter({
             framesMax: 2,
         },
         attack1: {
+            imageSrc: './img/wizard/attack1.png',
+            framesMax: 8,
+        },
+        attack1Reverse: {
             imageSrc: './img/wizard/attack1.png',
             framesMax: 8,
         },
@@ -269,6 +277,7 @@ function updateEnemyAI() {
                     rectangle1: enemy,
                     rectangle2: player
                 }) && enemy.isAttacking && enemy.frameCurrent === 4) {
+                player.switchSprite('takeHit')
                 player.takeHit(enemy);
                 enemy.isAttacking = false;
                 gsap.to('#playerHealth', {
@@ -365,14 +374,14 @@ function animate() {
     //Player Jump
     if (player.velocity.y < 0 && player.lastKey === 'a') {
         player.switchSprite('jumpReverse')
-    } else if (player.velocity.y < 0 && player.lastKey === 'd'){
+    } else if (player.velocity.y < 0 && player.lastKey === 'd') {
         player.switchSprite('jump')
     }
-    
+
     // Player Fall
     if (player.velocity.y > 0 && player.lastKey === 'a') {
         player.switchSprite('fallReverse')
-    } else if (player.velocity.y > 0 && player.lastKey === 'd'){
+    } else if (player.velocity.y > 0 && player.lastKey === 'd') {
         player.switchSprite('fall')
     }
 
@@ -523,7 +532,6 @@ function newGame() {
     startPreGameTimer();
 
 }
-console.log(playerData.roundsWon)
 newGame();
 
 let escapeKeyPressed = false;
@@ -550,8 +558,14 @@ window.addEventListener('keydown', (event) => {
                 player.velocity.y = -20
                 break
             case ' ':
-                player.attack()
-                break
+                if (player.lastKey === 'a') {
+                    player.attack2()
+                    break
+                } else {
+                    player.attack()
+                    break
+                }
+
         }
     }
 })

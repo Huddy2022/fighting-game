@@ -156,6 +156,11 @@ class Fighter extends Sprite {
         this.isAttacking = true
     }
 
+    attack2() {
+        this.switchSprite('attack1Reverse')
+        this.isAttacking = true
+    }
+
     takeHit(attacker) {
         this.health -= attacker.damageAmount;
 
@@ -248,6 +253,13 @@ class Fighter extends Sprite {
                 if (this.image !== this.sprites.attack1.image) {
                     this.image = this.sprites.attack1.image
                     this.framesMax = this.sprites.attack1.framesMax
+                    this.frameCurrent = 0
+                }
+                break
+            case 'attack1Reverse':
+                if (this.image !== this.sprites.attack1Reverse.image) {
+                    this.image = this.sprites.attack1Reverse.image
+                    this.framesMax = this.sprites.attack1Reverse.framesMax
                     this.frameCurrent = 0
                 }
                 break
