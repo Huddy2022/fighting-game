@@ -108,7 +108,7 @@ class Fighter extends Sprite {
             sprites[sprite].image = new Image()
             sprites[sprite].image.src = sprites[sprite].imageSrc
         }
-        
+
     }
 
     update() {
@@ -223,10 +223,24 @@ class Fighter extends Sprite {
                     this.frameCurrent = 0
                 }
                 break
+            case 'jumpReverse':
+                if (this.image !== this.sprites.jumpReverse.image) {
+                    this.image = this.sprites.jumpReverse.image
+                    this.framesMax = this.sprites.jumpReverse.framesMax
+                    this.frameCurrent = 0
+                }
+                break
             case 'fall':
                 if (this.image !== this.sprites.fall.image) {
                     this.image = this.sprites.fall.image
                     this.framesMax = this.sprites.fall.framesMax
+                    this.frameCurrent = 0
+                }
+                break
+            case 'fallReverse':
+                if (this.image !== this.sprites.fallReverse.image) {
+                    this.image = this.sprites.fallReverse.image
+                    this.framesMax = this.sprites.fallReverse.framesMax
                     this.frameCurrent = 0
                 }
                 break

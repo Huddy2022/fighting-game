@@ -89,8 +89,16 @@ const player = new Fighter({
             imageSrc: './img/samurai/Jump.png',
             framesMax: 2,
         },
+        jumpReverse: {
+            imageSrc: './img/samurai/jumpReverse.png',
+            framesMax: 2,
+        },
         fall: {
             imageSrc: './img/samurai/Fall.png',
+            framesMax: 2,
+        },
+        fallReverse: {
+            imageSrc: './img/samurai/fallReverse.png',
             framesMax: 2,
         },
         attack1: {
@@ -355,9 +363,16 @@ function animate() {
     }
 
     //Player Jump
-    if (player.velocity.y < 0) {
+    if (player.velocity.y < 0 && player.lastKey === 'a') {
+        player.switchSprite('jumpReverse')
+    } else if (player.velocity.y < 0 && player.lastKey === 'd'){
         player.switchSprite('jump')
-    } else if (player.velocity.y > 0) {
+    }
+    
+    // Player Fall
+    if (player.velocity.y > 0 && player.lastKey === 'a') {
+        player.switchSprite('fallReverse')
+    } else if (player.velocity.y > 0 && player.lastKey === 'd'){
         player.switchSprite('fall')
     }
 
