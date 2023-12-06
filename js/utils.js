@@ -30,12 +30,15 @@ function determineWinner({
         enemy.switchSprite('death');
         playerRoundsWon++;
         displayNextRoundButton(player, enemy);
+        enemy.dead;
     } else if (enemy.health > player.health) {
         document.querySelector('#displayText').innerHTML = 'Enemy Wins';
         enemy.switchSprite('idle');
+        player.switchSprite('death');
         enemyRoundsWon++;
         displayStars(1, '#enemyStars');
         displayNextRoundButton(player, enemy);
+        player.dead;
     }
 }
 

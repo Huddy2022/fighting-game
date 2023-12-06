@@ -475,6 +475,9 @@ function gameOver() {
 
     tryAgainButton.style.display = 'block';
 
+    player.dead = false;
+    enemy.dead = false;
+
 }
 
 function nextRound() {
@@ -510,6 +513,9 @@ function nextRound() {
     localStorage.setItem('score', playerData.score);
 
     roundTwoButton.style.display = 'block';
+
+    player.dead = false;
+    enemy.dead = false;
 
 }
 

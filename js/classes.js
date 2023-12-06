@@ -112,6 +112,12 @@ class Fighter extends Sprite {
     }
 
     update() {
+        if (this.dead) {
+            // Hide the canvas when the character is dead
+            this.display = 'none';
+            return;
+        }
+
         this.draw()
         if (!this.dead) this.animateFrames()
 
