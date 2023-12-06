@@ -106,7 +106,7 @@ const player = new Fighter({
             framesMax: 6,
         },
         attackReverse: {
-            imageSrc: './img/samurai/attackReverse.png',
+            imageSrc: './img/samurai/AttackReverse.png',
             framesMax: 6,
         },
         takeHit: {
@@ -390,7 +390,6 @@ function animate() {
             rectangle1: player,
             rectangle2: enemy
         }) && player.isAttacking && player.frameCurrent === 4) {
-        console.log(player.isAttacking)
         enemy.switchSprite('takeHit')
         enemy.takeHit(player)
         player.velocity.x = -3;
@@ -403,7 +402,7 @@ function animate() {
     // If player misses
 
     if (player.isAttacking && player.frameCurrent === 4) {
-        console.log(player.isAttacking)
+        player.isAttacking = false
     }
 
     if (enemy.health <= 0 || player.health <= 0) {
@@ -465,8 +464,6 @@ function gameOver() {
 
     playerData.score = totalScore;
 
-    console.log(playerData.score)
-
     // Save leaderboard data
     saveLeaderboardData();
 
@@ -490,8 +487,6 @@ function nextRound() {
 
     playerData.totalGameTime = gameStartTime - gameEndTime;
 
-    console.log(playerData.totalGameTime)
-
     // Calculate total score
     const maxGameTime = 60; // Maximum game time in seconds
     const minScore = 1; // Minimum score
@@ -504,8 +499,6 @@ function nextRound() {
     const totalScore = Math.round((1 - normalizedGameTime) * (maxScore - minScore) + minScore);
 
     playerData.score = totalScore;
-
-    console.log(playerData.score)
 
     // Save leaderboard data
     saveLeaderboardData();
@@ -560,12 +553,10 @@ window.addEventListener('keydown', (event) => {
                 break
             case ' ':
                 if (player.lastKey === 'a') {
-                    player.switchSprite('attackReverse')
-                    player.isAttacking = true
+                    player.attack2();
                 } else {
                     player.attack();
                 }
-
                 break;
 
         }
