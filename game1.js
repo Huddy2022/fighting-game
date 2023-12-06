@@ -105,8 +105,8 @@ const player = new Fighter({
             imageSrc: './img/samurai/Attack1.png',
             framesMax: 6,
         },
-        attack1Reverse: {
-            imageSrc: './img/samurai/attack1Reverse.png',
+        attackReverse: {
+            imageSrc: './img/samurai/attackReverse.png',
             framesMax: 6,
         },
         takeHit: {
@@ -170,7 +170,7 @@ const enemy = new Fighter({
             imageSrc: './img/wizard/attack1.png',
             framesMax: 8,
         },
-        attack1Reverse: {
+        attackReverse: {
             imageSrc: './img/wizard/attack1.png',
             framesMax: 8,
         },
@@ -390,6 +390,7 @@ function animate() {
             rectangle1: player,
             rectangle2: enemy
         }) && player.isAttacking && player.frameCurrent === 4) {
+        console.log(player.isAttacking)
         enemy.switchSprite('takeHit')
         enemy.takeHit(player)
         player.velocity.x = -3;
@@ -402,7 +403,7 @@ function animate() {
     // If player misses
 
     if (player.isAttacking && player.frameCurrent === 4) {
-        player.isAttacking = false
+        console.log(player.isAttacking)
     }
 
     if (enemy.health <= 0 || player.health <= 0) {
@@ -559,12 +560,13 @@ window.addEventListener('keydown', (event) => {
                 break
             case ' ':
                 if (player.lastKey === 'a') {
-                    player.attack2()
-                    break
+                    player.switchSprite('attackReverse')
+                    player.isAttacking = true
                 } else {
-                    player.attack()
-                    break
+                    player.attack();
                 }
+
+                break;
 
         }
     }

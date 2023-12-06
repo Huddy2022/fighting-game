@@ -154,11 +154,7 @@ class Fighter extends Sprite {
     attack() {
         this.switchSprite('attack1')
         this.isAttacking = true
-    }
 
-    attack2() {
-        this.switchSprite('attack1Reverse')
-        this.isAttacking = true
     }
 
     takeHit(attacker) {
@@ -256,10 +252,10 @@ class Fighter extends Sprite {
                     this.frameCurrent = 0
                 }
                 break
-            case 'attack1Reverse':
-                if (this.image !== this.sprites.attack1Reverse.image) {
-                    this.image = this.sprites.attack1Reverse.image
-                    this.framesMax = this.sprites.attack1Reverse.framesMax
+            case 'attackReverse':
+                if (this.image !== this.sprites.attackReverse.image) {
+                    this.image = this.sprites.attackReverse.image
+                    this.framesMax = this.sprites.attackReverse.framesMax
                     this.frameCurrent = 0
                 }
                 break
