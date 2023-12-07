@@ -3,12 +3,10 @@ const c = canvas.getContext('2d')
 
 const gamer = localStorage.getItem('playerName');
 
-console.log(gamer)
-
 let playerData = {
     playerName: gamer,
     roundsWon: 0,
-    totalGameTime: 0, // in seconds
+    totalGameTime: 0,
     score: 0,
 };
 
@@ -475,9 +473,6 @@ function gameOver() {
 
     tryAgainButton.style.display = 'block';
 
-    player.dead = false;
-    enemy.dead = false;
-
 }
 
 function nextRound() {
@@ -514,9 +509,6 @@ function nextRound() {
 
     roundTwoButton.style.display = 'block';
 
-    player.dead = false;
-    enemy.dead = false;
-
 }
 
 function newGame() {
@@ -527,6 +519,9 @@ function newGame() {
 
     // Show the canvas and hide the pre-game timer
     document.querySelector('#preGameTimer').style.display = 'block';
+
+    player.dead = false;
+    enemy.dead = false;
 
     // Start the pre-game timer
     startPreGameTimer();
