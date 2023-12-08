@@ -73,20 +73,40 @@ const player = new Fighter({
             imageSrc: './img/samurai/Idle.png',
             framesMax: 8
         },
+        idleReverse: {
+            imageSrc: './img/samurai/IdleReverse.png',
+            framesMax: 8
+        },
         run: {
             imageSrc: './img/samurai/Run.png',
+            framesMax: 8,
+        },
+        runReverse: {
+            imageSrc: './img/samurai/runReverse.png',
             framesMax: 8,
         },
         jump: {
             imageSrc: './img/samurai/Jump.png',
             framesMax: 2,
         },
+        jumpReverse: {
+            imageSrc: './img/samurai/jumpReverse.png',
+            framesMax: 2,
+        },
         fall: {
             imageSrc: './img/samurai/Fall.png',
             framesMax: 2,
         },
+        fallReverse: {
+            imageSrc: './img/samurai/fallReverse.png',
+            framesMax: 2,
+        },
         attack1: {
             imageSrc: './img/samurai/Attack1.png',
+            framesMax: 6,
+        },
+        attackReverse: {
+            imageSrc: './img/samurai/AttackReverse.png',
             framesMax: 6,
         },
         takeHit: {
@@ -142,6 +162,10 @@ const enemy = new Fighter({
             imageSrc: './img/boss/attack.png',
             framesMax: 10,
         },
+        attackReverse: {
+            imageSrc: './img/boss/attack.png',
+            framesMax: 10,
+        },
         takeHit: {
             imageSrc: './img/boss/take hit.png',
             framesMax: 3,
@@ -160,8 +184,6 @@ const enemy = new Fighter({
         height: 50
     },
 })
-
-console.log(player)
 
 const keys = {
     a: {
@@ -247,6 +269,7 @@ function updateEnemyAI() {
                     rectangle1: enemy,
                     rectangle2: player
                 }) && enemy.isAttacking && enemy.frameCurrent === 5) {
+                player.switchSprite('takeHit')
                 player.takeHit(enemy);
                 enemy.isAttacking = false;
                 gsap.to('#playerHealth', {
@@ -327,18 +350,33 @@ function animate() {
     //Player movemnet
     if (keys.a.pressed && player.lastKey === 'a') {
         player.velocity.x = -5
-        player.switchSprite('run')
+        player.switchSprite('runReverse')
+        player.attackBox.offset.x = -200
     } else if (keys.d.pressed && player.lastKey === 'd') {
         player.velocity.x = 5
         player.switchSprite('run')
+        player.attackBox.offset.x = 100
     } else {
-        player.switchSprite('idle')
+        if (player.lastKey === 'a') {
+            player.switchSprite('idleReverse');
+
+        } else {
+            player.switchSprite('idle');
+
+        }
     }
 
     //Player Jump
-    if (player.velocity.y < 0) {
+    if (player.velocity.y < 0 && player.lastKey === 'a') {
+        player.switchSprite('jumpReverse')
+    } else if (player.velocity.y < 0 && player.lastKey === 'd') {
         player.switchSprite('jump')
-    } else if (player.velocity.y > 0) {
+    }
+
+    // Player Fall
+    if (player.velocity.y > 0 && player.lastKey === 'a') {
+        player.switchSprite('fallReverse')
+    } else if (player.velocity.y > 0 && player.lastKey === 'd') {
         player.switchSprite('fall')
     }
 
@@ -346,7 +384,7 @@ function animate() {
     if (rectangluarCollison({
             rectangle1: player,
             rectangle2: enemy
-        }) && player.isAttacking && player.frameCurrent === 2) {
+        }) && player.isAttacking && player.frameCurrent === 4) {
         enemy.switchSprite('takeHit')
         enemy.takeHit(player)
         player.velocity.x = -3;
@@ -406,15 +444,9 @@ function gameOver() {
 
     playerData.roundsWon = 3;
 
-    console.log(totalGameTimeFromGame3);
-
     const totalTime = gameStartTime - gameEndTime;
 
-    console.log(totalTime);
-
     playerData.totalGameTime = totalTime + parseInt(totalGameTimeFromGame3, 10);
-
-    console.log(playerData.totalGameTime);
 
     // Calculate total score
     const maxGameTime = 60; // Maximum game time in seconds
@@ -427,11 +459,7 @@ function gameOver() {
     // Calculate the score using a linear interpolation
     const totalScore = Math.round((1 - normalizedGameTime) * (maxScore - minScore) + minScore);
 
-    console.log(totalScore)
-
     playerData.score = totalScore + parseInt(totalScoreFromGame3, 10);
-
-    console.log(playerData.score)
 
     // Save leaderboard data
     saveLeaderboardData();
@@ -456,11 +484,7 @@ function wonGame() {
 
     const totalTime = gameStartTime - gameEndTime;
 
-    console.log(totalTime);
-
     playerData.totalGameTime = totalTime + parseInt(totalGameTimeFromGame3, 10);
-
-    console.log(playerData.totalGameTime);
 
     // Calculate total score
     const maxGameTime = 60; // Maximum game time in seconds
@@ -473,11 +497,7 @@ function wonGame() {
     // Calculate the score using a linear interpolation
     const totalScore = Math.round((1 - normalizedGameTime) * (maxScore - minScore) + minScore);
 
-    console.log(totalScore)
-
     playerData.score = totalScore + parseInt(totalScoreFromGame3, 10);
-
-    console.log(playerData.score)
 
     // Save leaderboard data
     saveLeaderboardData();
@@ -532,8 +552,12 @@ window.addEventListener('keydown', (event) => {
                 player.velocity.y = -20
                 break
             case ' ':
-                player.attack()
-                break
+                if (player.lastKey === 'a') {
+                    player.attack2();
+                } else {
+                    player.attack();
+                }
+                break;
         }
     }
 })
