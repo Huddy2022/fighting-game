@@ -184,7 +184,15 @@ const enemy = new Fighter({
             imageSrc: './img/wizard/take_hit.png',
             framesMax: 3,
         },
+        takeHitReverse: {
+            imageSrc: './img/wizard/take_hit.png',
+            framesMax: 3,
+        },
         death: {
+            imageSrc: './img/wizard/death.png',
+            framesMax: 7,
+        },
+        deathReverse: {
             imageSrc: './img/wizard/death.png',
             framesMax: 7,
         }
