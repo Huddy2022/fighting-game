@@ -284,10 +284,24 @@ class Fighter extends Sprite {
                     this.frameCurrent = 0
                 }
                 break
+            case 'takeHitReverse':
+                if (this.image !== this.sprites.takeHitReverse.image) {
+                    this.image = this.sprites.takeHitReverse.image
+                    this.framesMax = this.sprites.takeHitReverse.framesMax
+                    this.frameCurrent = 0
+                }
+                break
             case 'death':
                 if (this.image !== this.sprites.death.image) {
                     this.image = this.sprites.death.image
                     this.framesMax = this.sprites.death.framesMax
+                    this.frameCurrent = 0
+                }
+                break
+            case 'deathReverse':
+                if (this.image !== this.sprites.deathReverse.image) {
+                    this.image = this.sprites.deathReverse.image
+                    this.framesMax = this.sprites.deathReverse.framesMax
                     this.frameCurrent = 0
                 }
                 break

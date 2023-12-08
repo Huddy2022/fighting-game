@@ -111,8 +111,16 @@ const player = new Fighter({
             imageSrc: './img/samurai/Take Hit - white silhouette.png',
             framesMax: 4,
         },
+        takeHitReverse: {
+            imageSrc: './img/samurai/Take Hit - white silhouette Reverse.png',
+            framesMax: 4,
+        },
         death: {
             imageSrc: './img/samurai/Death.png',
+            framesMax: 6,
+        },
+        deathReverse: {
+            imageSrc: './img/samurai/DeathReverse.png',
             framesMax: 6,
         }
     },
@@ -275,7 +283,12 @@ function updateEnemyAI() {
                     rectangle1: enemy,
                     rectangle2: player
                 }) && enemy.isAttacking && enemy.frameCurrent === 4) {
-                player.switchSprite('takeHit')
+                    if (player.lastKey === 'a') {
+                        player.switchSprite('takeHitReverse');
+                    } else {
+                        player.switchSprite('takeHit');
+                    }
+                
                 player.takeHit(enemy);
                 enemy.isAttacking = false;
                 gsap.to('#playerHealth', {
