@@ -186,6 +186,13 @@ class Fighter extends Sprite {
             return
         }
 
+        if (this.image === this.sprites.deathReverse.image) {
+            if (this.frameCurrent === this.sprites.deathReverse.framesMax - 1)
+                this.dead = true
+
+            return
+        }
+
         // overriding all other animations with attack animation
         if (
             this.image === this.sprites.attack1.image &&
