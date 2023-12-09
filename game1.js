@@ -160,16 +160,32 @@ const enemy = new Fighter({
             imageSrc: './img/wizard/idle.png',
             framesMax: 8
         },
+        idleReverse: {
+            imageSrc: './img/wizard/idleReverse.png',
+            framesMax: 8
+        },
         run: {
             imageSrc: './img/wizard/run.png',
+            framesMax: 8,
+        },
+        runReverse: {
+            imageSrc: './img/wizard/RunReverse.png',
             framesMax: 8,
         },
         jump: {
             imageSrc: './img/wizard/jump.png',
             framesMax: 2,
         },
+        jumpReverse: {
+            imageSrc: './img/wizard/JumpReverse.png',
+            framesMax: 2,
+        },
         fall: {
             imageSrc: './img/wizard/fall.png',
+            framesMax: 2,
+        },
+        fallReverse: {
+            imageSrc: './img/wizard/FallReverse.png',
             framesMax: 2,
         },
         attack1: {
@@ -177,7 +193,7 @@ const enemy = new Fighter({
             framesMax: 8,
         },
         attackReverse: {
-            imageSrc: './img/wizard/attack1.png',
+            imageSrc: './img/wizard/AttackReverse.png',
             framesMax: 8,
         },
         takeHit: {
@@ -185,7 +201,7 @@ const enemy = new Fighter({
             framesMax: 3,
         },
         takeHitReverse: {
-            imageSrc: './img/wizard/take_hit.png',
+            imageSrc: './img/wizard/takeHitReverse.png',
             framesMax: 3,
         },
         death: {
@@ -193,7 +209,7 @@ const enemy = new Fighter({
             framesMax: 7,
         },
         deathReverse: {
-            imageSrc: './img/wizard/death.png',
+            imageSrc: './img/wizard/DeathReverse.png',
             framesMax: 7,
         }
     },
