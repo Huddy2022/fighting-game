@@ -261,9 +261,11 @@ function updateEnemyAI() {
             if (playerPositionX < enemyPositionX) {
                 enemy.velocity.x = -3;
                 enemy.switchSprite('run'); // Move left
+                enemy.attackBox.offset.x = -200
             } else if (playerPositionX > enemyPositionX) {
                 enemy.velocity.x = 3; // Move right
                 enemy.switchSprite('runReverse');
+                enemy.attackBox.offset.x = 100
             }
         } else {
             enemy.velocity.x = 0; // Stop moving horizontally if too close to the player
@@ -271,9 +273,13 @@ function updateEnemyAI() {
 
         // Implement attacking behavior with cooldown
         if (distanceToPlayer < 175 && enemyAttackCooldown <= 0) {
-            // If the player is within attack range and the cooldown has expired, perform an attack
-            enemy.attack();
-            enemyAttackCooldown = attackCooldownDuration; // Set the cooldown
+            if (playerPositionX < enemyPositionX) {
+                enemy.attack();
+                enemyAttackCooldown = attackCooldownDuration;
+            } else if (playerPositionX > enemyPositionX) {
+                enemy.attack2();
+                enemyAttackCooldown = attackCooldownDuration;
+            }
         }
 
         // Reduce attack cooldown
@@ -289,8 +295,14 @@ function updateEnemyAI() {
         if (!enemy.isTakingHit) {
             // Implement attacking behavior with cooldown
             if (distanceToPlayer < 100 && enemyAttackCooldown <= 0) {
-                enemy.attack();
-                enemyAttackCooldown = attackCooldownDuration;
+                if (playerPositionX < enemyPositionX) {
+                    enemy.attack();
+                    enemyAttackCooldown = attackCooldownDuration;
+                } else if (playerPositionX > enemyPositionX) {
+                    enemy.attack2();
+                    enemyAttackCooldown = attackCooldownDuration;
+                }
+
             }
 
             // Detect for collision & player get hit
