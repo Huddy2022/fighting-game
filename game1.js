@@ -252,15 +252,6 @@ function updateEnemyAI() {
     const enemyPositionX = enemy.position.x;
     const distanceToPlayer = Math.abs(playerPositionX - enemyPositionX);
 
-    // Check if the enemy is in the "death" state
-    if (enemy.currentSprite === 'death') {
-        enemy.velocity.x = 0;
-        enemy.velocity.y = 0;
-        enemy.isAttacking = false;
-        enemy.switchSprite('death');
-        return;
-    }
-
     // Check if the enemy is on the ground
     const isEnemyOnGround = enemy.position.y === 473;
 
@@ -272,7 +263,7 @@ function updateEnemyAI() {
                 enemy.switchSprite('run'); // Move left
             } else if (playerPositionX > enemyPositionX) {
                 enemy.velocity.x = 3; // Move right
-                enemy.switchSprite('run');
+                enemy.switchSprite('runReverse');
             }
         } else {
             enemy.velocity.x = 0; // Stop moving horizontally if too close to the player
@@ -307,12 +298,12 @@ function updateEnemyAI() {
                     rectangle1: enemy,
                     rectangle2: player
                 }) && enemy.isAttacking && enemy.frameCurrent === 4) {
-                    if (player.lastKey === 'a') {
-                        player.switchSprite('takeHitReverse');
-                    } else {
-                        player.switchSprite('takeHit');
-                    }
-                
+                if (player.lastKey === 'a') {
+                    player.switchSprite('takeHitReverse');
+                } else {
+                    player.switchSprite('takeHit');
+                }
+
                 player.takeHit(enemy);
                 enemy.isAttacking = false;
                 gsap.to('#playerHealth', {
@@ -323,7 +314,7 @@ function updateEnemyAI() {
                     determineWinner({
                         player,
                         enemy,
-                        timerId
+                        timerId,
                     });
                 }
             }

@@ -17,17 +17,22 @@ function rectangluarCollison({
 function determineWinner({
     player,
     enemy,
-    timerId
+    timerId,
 }) {
     clearTimeout(timerId);
     document.querySelector('#displayText').style.display = 'flex';
+    console.log(player.lastKey);
 
     if (player.health === enemy.health) {
         document.querySelector('#displayText').innerHTML = 'Tie';
         displayNextRoundButton(player, enemy);
     } else if (player.health > enemy.health) {
         document.querySelector('#displayText').innerHTML = 'Player Wins';
-        enemy.switchSprite('death');
+        if (player.lastKey === 'a') {
+            enemy.switchSprite('deathReverse');
+        } else {
+            enemy.switchSprite('death');
+        }
         playerRoundsWon++;
         displayNextRoundButton(player, enemy);
         enemy.dead;
