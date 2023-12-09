@@ -201,7 +201,7 @@ const enemy = new Fighter({
             framesMax: 3,
         },
         takeHitReverse: {
-            imageSrc: './img/wizard/takeHitReverse.png',
+            imageSrc: './img/wizard/TakeHitReverse.png',
             framesMax: 3,
         },
         death: {
@@ -416,7 +416,11 @@ function animate() {
             rectangle1: player,
             rectangle2: enemy
         }) && player.isAttacking && player.frameCurrent === 4) {
-        enemy.switchSprite('takeHit')
+        if (player.lastKey === 'a') {
+            enemy.switchSprite('takeHitReverse');
+        } else {
+            enemy.switchSprite('takeHit');
+        }
         enemy.takeHit(player)
         player.velocity.x = -3;
         player.isAttacking = false

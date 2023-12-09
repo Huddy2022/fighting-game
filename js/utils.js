@@ -21,7 +21,6 @@ function determineWinner({
 }) {
     clearTimeout(timerId);
     document.querySelector('#displayText').style.display = 'flex';
-    console.log(player.lastKey);
 
     if (player.health === enemy.health) {
         document.querySelector('#displayText').innerHTML = 'Tie';
