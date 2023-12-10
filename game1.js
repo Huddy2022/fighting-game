@@ -161,7 +161,7 @@ const enemy = new Fighter({
             framesMax: 8
         },
         idleReverse: {
-            imageSrc: './img/wizard/idleReverse.png',
+            imageSrc: './img/wizard/IdleReverse.png',
             framesMax: 8
         },
         run: {
@@ -292,14 +292,12 @@ function updateEnemyAI() {
                 enemy.switchSprite('jump');
                 setTimeout(() => {
                     enemy.switchSprite('fall');
-                    console.log('fall');
                 }, 500);
             } else if (playerPositionX > enemyPositionX) {
                 enemy.velocity.y = -20;
                 enemy.switchSprite('jumpReverse');
                 setTimeout(() => {
                     enemy.switchSprite('fallReverse');
-                    console.log('fallReverse');
                 }, 500);
             }
 

@@ -37,10 +37,11 @@ function determineWinner({
         enemy.dead;
     } else if (enemy.health > player.health) {
         document.querySelector('#displayText').innerHTML = 'Enemy Wins';
-        enemy.switchSprite('idle');
         if (player.lastKey === 'a') {
+            enemy.switchSprite('idleReverse');
             player.switchSprite('deathReverse');
         } else {
+            enemy.switchSprite('idle');
             player.switchSprite('death');
         }
         enemyRoundsWon++;
