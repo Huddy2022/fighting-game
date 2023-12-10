@@ -162,8 +162,16 @@ const enemy = new Fighter({
             imageSrc: './img/boss/idle.png',
             framesMax: 8
         },
+        idleReverse: {
+            imageSrc: './img/boss2/idleReverse.png',
+            framesMax: 8
+        },
         run: {
             imageSrc: './img/boss/run.png',
+            framesMax: 8,
+        },
+        runReverse: {
+            imageSrc: './img/boss2/runReverse.png',
             framesMax: 8,
         },
         attack1: {
@@ -171,7 +179,7 @@ const enemy = new Fighter({
             framesMax: 10,
         },
         attackReverse: {
-            imageSrc: './img/boss/attack.png',
+            imageSrc: './img/boss2/attackReverse.png',
             framesMax: 10,
         },
         takeHit: {
@@ -179,7 +187,7 @@ const enemy = new Fighter({
             framesMax: 3,
         },
         takeHitReverse: {
-            imageSrc: './img/boss/take hit.png',
+            imageSrc: './img/boss2/takeHitReverse.png',
             framesMax: 3,
         },
         death: {
@@ -187,7 +195,7 @@ const enemy = new Fighter({
             framesMax: 8,
         },
         deathReverse: {
-            imageSrc: './img/boss/death.png',
+            imageSrc: './img/boss2/deathReverse.png',
             framesMax: 8,
         }
     },
@@ -229,15 +237,6 @@ function updateEnemyAI() {
     const enemyPositionX = enemy.position.x;
     const distanceToPlayer = Math.abs(playerPositionX - enemyPositionX);
 
-    // Check if the enemy is in the "death" state
-    if (enemy.currentSprite === 'death') {
-        enemy.velocity.x = 0;
-        enemy.velocity.y = 0;
-        enemy.isAttacking = false;
-        enemy.switchSprite('death');
-        return;
-    }
-
     // Check if the enemy is on the ground
     const isEnemyOnGround = enemy.position.y === 473;
 
@@ -248,9 +247,11 @@ function updateEnemyAI() {
             if (playerPositionX < enemyPositionX) {
                 enemy.velocity.x = -9;
                 enemy.switchSprite('run'); // Move left
+                enemy.attackBox.offset.x = -200
             } else if (playerPositionX > enemyPositionX) {
                 enemy.velocity.x = 9; // Move right
-                enemy.switchSprite('run');
+                enemy.switchSprite('runReverse');
+                enemy.attackBox.offset.x = 10
             }
         } else {
             enemy.velocity.x = 0; // Stop moving horizontally if too close to the player
@@ -258,53 +259,50 @@ function updateEnemyAI() {
 
         // Implement attacking behavior with cooldown
         if (distanceToPlayer < 210 && enemyAttackCooldown <= 0) {
-            // If the player is within attack range and the cooldown has expired, perform an attack
-            enemy.attack();
-            enemyAttackCooldown = attackCooldownDuration; // Set the cooldown
+            if (playerPositionX < enemyPositionX) {
+                enemy.attack();
+                enemyAttackCooldown = attackCooldownDuration;
+            } else if (playerPositionX > enemyPositionX) {
+                enemy.attackBox.offset.x = 10
+                enemy.attack2();
+                enemyAttackCooldown = attackCooldownDuration;
+            }
         }
 
         // Reduce attack cooldown
         enemyAttackCooldown = Math.max(0, enemyAttackCooldown - 1);
 
         // Implement jumping behavior (less frequent)
-        if (Math.random() < 0.005 && enemy.position.y === 473) {
+        if (Math.random() < 0.0075 && enemy.position.y === 473) {
             // Jump with a small probability (0.5% chance) if the enemy is on the ground
-            enemy.velocity.y = -15; // Adjust the jump height by changing the vertical velocity
+            enemy.velocity.y = -20; // Adjust the jump height by changing the vertical velocity
         }
 
-        // Handle enemy attacks only if it is not taking a hit
-        if (!enemy.isTakingHit) {
-            // Implement attacking behavior with cooldown
-            if (distanceToPlayer < 100 && enemyAttackCooldown <= 0) {
-                enemy.attack();
-                enemyAttackCooldown = attackCooldownDuration;
+        // Detect for collision & player get hit
+        if (rectangluarCollison({
+                rectangle1: enemy,
+                rectangle2: player
+            }) && enemy.isAttacking && enemy.frameCurrent === 5) {
+            if (player.lastKey === 'a') {
+                player.switchSprite('takeHitReverse');
+            } else {
+                player.switchSprite('takeHit');
             }
+            player.takeHit(enemy);
+            enemy.isAttacking = false;
+            gsap.to('#playerHealth', {
+                width: player.health + '%'
+            });
 
-            // Detect for collision & player get hit
-            if (rectangluarCollison({
-                    rectangle1: enemy,
-                    rectangle2: player
-                }) && enemy.isAttacking && enemy.frameCurrent === 5) {
-                if (player.lastKey === 'a') {
-                    player.switchSprite('takeHitReverse');
-                } else {
-                    player.switchSprite('takeHit');
-                }
-                player.takeHit(enemy);
-                enemy.isAttacking = false;
-                gsap.to('#playerHealth', {
-                    width: player.health + '%'
+            if (enemy.health <= 0 || player.health <= 0) {
+                determineWinner({
+                    player,
+                    enemy,
+                    timerId
                 });
-
-                if (enemy.health <= 0 || player.health <= 0) {
-                    determineWinner({
-                        player,
-                        enemy,
-                        timerId
-                    });
-                }
             }
         }
+
     }
 
     // Update the enemy's position
@@ -405,7 +403,11 @@ function animate() {
             rectangle1: player,
             rectangle2: enemy
         }) && player.isAttacking && player.frameCurrent === 4) {
-        enemy.switchSprite('takeHit')
+        if (player.lastKey === 'a') {
+            enemy.switchSprite('takeHitReverse');
+        } else {
+            enemy.switchSprite('takeHit');
+        }
         enemy.takeHit(player)
         player.velocity.x = -3;
         player.isAttacking = false

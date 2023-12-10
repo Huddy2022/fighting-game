@@ -162,8 +162,16 @@ const enemy = new Fighter({
             imageSrc: './img/evil_wizard/idle.png',
             framesMax: 8
         },
+        idleReverse: {
+            imageSrc: './img/evil_wizard/IdleReverse.png',
+            framesMax: 8
+        },
         run: {
             imageSrc: './img/evil_wizard/run.png',
+            framesMax: 8,
+        },
+        runReverse: {
+            imageSrc: './img/evil_wizard/RunReverse.png',
             framesMax: 8,
         },
         attack1: {
@@ -171,7 +179,7 @@ const enemy = new Fighter({
             framesMax: 8,
         },
         attackReverse: {
-            imageSrc: './img/evil_wizard/attack.png',
+            imageSrc: './img/evil_wizard/AttackReverse.png',
             framesMax: 8,
         },
         takeHit: {
@@ -179,7 +187,7 @@ const enemy = new Fighter({
             framesMax: 4,
         },
         takeHitReverse: {
-            imageSrc: './img/evil_wizard/take hit.png',
+            imageSrc: './img/evil_wizard/TakeHitReverse.png',
             framesMax: 4,
         },
         death: {
@@ -187,7 +195,7 @@ const enemy = new Fighter({
             framesMax: 5,
         },
         deathReverse: {
-            imageSrc: './img/evil_wizard/death.png',
+            imageSrc: './img/evil_wizard/DeathReverse.png',
             framesMax: 5,
         }
     },
@@ -200,8 +208,6 @@ const enemy = new Fighter({
         height: 50
     },
 })
-
-console.log(player)
 
 const keys = {
     a: {
@@ -231,15 +237,6 @@ function updateEnemyAI() {
     const enemyPositionX = enemy.position.x;
     const distanceToPlayer = Math.abs(playerPositionX - enemyPositionX);
 
-    // Check if the enemy is in the "death" state
-    if (enemy.currentSprite === 'death') {
-        enemy.velocity.x = 0;
-        enemy.velocity.y = 0;
-        enemy.isAttacking = false;
-        enemy.switchSprite('death');
-        return;
-    }
-
     // Check if the enemy is on the ground
     const isEnemyOnGround = enemy.position.y === 473;
 
@@ -250,9 +247,11 @@ function updateEnemyAI() {
             if (playerPositionX < enemyPositionX) {
                 enemy.velocity.x = -7;
                 enemy.switchSprite('run'); // Move left
+                enemy.attackBox.offset.x = -200
             } else if (playerPositionX > enemyPositionX) {
                 enemy.velocity.x = 7; // Move right
-                enemy.switchSprite('run');
+                enemy.switchSprite('runReverse');
+                enemy.attackBox.offset.x = 10
             }
         } else {
             enemy.velocity.x = 0; // Stop moving horizontally if too close to the player
@@ -260,53 +259,48 @@ function updateEnemyAI() {
 
         // Implement attacking behavior with cooldown
         if (distanceToPlayer < 210 && enemyAttackCooldown <= 0) {
-            // If the player is within attack range and the cooldown has expired, perform an attack
-            enemy.attack();
-            enemyAttackCooldown = attackCooldownDuration; // Set the cooldown
+            if (playerPositionX < enemyPositionX) {
+                enemy.attack();
+                enemyAttackCooldown = attackCooldownDuration;
+            } else if (playerPositionX > enemyPositionX) {
+                enemy.attack2();
+                enemyAttackCooldown = attackCooldownDuration;
+            }
         }
 
         // Reduce attack cooldown
         enemyAttackCooldown = Math.max(0, enemyAttackCooldown - 1);
 
         // Implement jumping behavior (less frequent)
-        if (Math.random() < 0.005 && enemy.position.y === 473) {
-            // Jump with a small probability (0.5% chance) if the enemy is on the ground
-            enemy.velocity.y = -15; // Adjust the jump height by changing the vertical velocity
+        if (Math.random() < 0.0075 && enemy.position.y === 473) {
+            enemy.velocity.y = -20;
         }
 
-        // Handle enemy attacks only if it is not taking a hit
-        if (!enemy.isTakingHit) {
-            // Implement attacking behavior with cooldown
-            if (distanceToPlayer < 200 && enemyAttackCooldown <= 0) {
-                enemy.attack();
-                enemyAttackCooldown = attackCooldownDuration;
+        // Detect for collision & player get hit
+        if (rectangluarCollison({
+                rectangle1: enemy,
+                rectangle2: player
+            }) && enemy.isAttacking && enemy.frameCurrent === 1) {
+            if (player.lastKey === 'a') {
+                player.switchSprite('takeHitReverse');
+            } else {
+                player.switchSprite('takeHit');
             }
+            player.takeHit(enemy);
+            enemy.isAttacking = false;
+            gsap.to('#playerHealth', {
+                width: player.health + '%'
+            });
 
-            // Detect for collision & player get hit
-            if (rectangluarCollison({
-                    rectangle1: enemy,
-                    rectangle2: player
-                }) && enemy.isAttacking && enemy.frameCurrent === 1) {
-                if (player.lastKey === 'a') {
-                    player.switchSprite('takeHitReverse');
-                } else {
-                    player.switchSprite('takeHit');
-                }
-                player.takeHit(enemy);
-                enemy.isAttacking = false;
-                gsap.to('#playerHealth', {
-                    width: player.health + '%'
+            if (enemy.health <= 0 || player.health <= 0) {
+                determineWinner({
+                    player,
+                    enemy,
+                    timerId
                 });
-
-                if (enemy.health <= 0 || player.health <= 0) {
-                    determineWinner({
-                        player,
-                        enemy,
-                        timerId
-                    });
-                }
             }
         }
+
     }
 
     // Update the enemy's position
@@ -407,7 +401,11 @@ function animate() {
             rectangle1: player,
             rectangle2: enemy
         }) && player.isAttacking && player.frameCurrent === 4) {
-        enemy.switchSprite('takeHit')
+        if (player.lastKey === 'a') {
+            enemy.switchSprite('takeHitReverse');
+        } else {
+            enemy.switchSprite('takeHit');
+        }
         enemy.takeHit(player)
         player.velocity.x = -3;
         player.isAttacking = false

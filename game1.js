@@ -326,7 +326,7 @@ function updateEnemyAI() {
                 determineWinner({
                     player,
                     enemy,
-                    timerId,
+                    timerId
                 });
             }
         }
