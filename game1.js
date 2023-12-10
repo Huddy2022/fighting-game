@@ -265,7 +265,7 @@ function updateEnemyAI() {
             } else if (playerPositionX > enemyPositionX) {
                 enemy.velocity.x = 3; // Move right
                 enemy.switchSprite('runReverse');
-                enemy.attackBox.offset.x = 100
+                enemy.attackBox.offset.x = 125
             }
         } else {
             enemy.velocity.x = 0; // Stop moving horizontally if too close to the player
@@ -286,51 +286,53 @@ function updateEnemyAI() {
         enemyAttackCooldown = Math.max(0, enemyAttackCooldown - 1);
 
         // Implement jumping behavior (less frequent)
-        if (Math.random() < 0.005 && isEnemyOnGround) {
-            // Jump with a small probability (0.5% chance) if the enemy is on the ground
-            enemy.velocity.y = -15; // Adjust the jump height by changing the vertical velocity
-        }
-
-        // Handle enemy attacks only if it is not taking a hit
-        if (!enemy.isTakingHit) {
-            // Implement attacking behavior with cooldown
-            if (distanceToPlayer < 100 && enemyAttackCooldown <= 0) {
-                if (playerPositionX < enemyPositionX) {
-                    enemy.attack();
-                    enemyAttackCooldown = attackCooldownDuration;
-                } else if (playerPositionX > enemyPositionX) {
-                    enemy.attack2();
-                    enemyAttackCooldown = attackCooldownDuration;
-                }
-
+        if (Math.random() < 0.0075 && isEnemyOnGround) {
+            if (playerPositionX < enemyPositionX) {
+                enemy.velocity.y = -20;
+                enemy.switchSprite('jump');
+                setTimeout(() => {
+                    enemy.switchSprite('fall');
+                    console.log('fall');
+                }, 500);
+            } else if (playerPositionX > enemyPositionX) {
+                enemy.velocity.y = -20;
+                enemy.switchSprite('jumpReverse');
+                setTimeout(() => {
+                    enemy.switchSprite('fallReverse');
+                    console.log('fallReverse');
+                }, 500);
             }
 
-            // Detect for collision & player get hit
-            if (rectangluarCollison({
-                    rectangle1: enemy,
-                    rectangle2: player
-                }) && enemy.isAttacking && enemy.frameCurrent === 4) {
-                if (player.lastKey === 'a') {
-                    player.switchSprite('takeHitReverse');
-                } else {
-                    player.switchSprite('takeHit');
-                }
+        }
 
-                player.takeHit(enemy);
-                enemy.isAttacking = false;
-                gsap.to('#playerHealth', {
-                    width: player.health + '%'
+
+
+        // Detect for collision & player get hit
+        if (rectangluarCollison({
+                rectangle1: enemy,
+                rectangle2: player
+            }) && enemy.isAttacking && enemy.frameCurrent === 4) {
+            if (player.lastKey === 'a') {
+                player.switchSprite('takeHitReverse');
+            } else {
+                player.switchSprite('takeHit');
+            }
+
+            player.takeHit(enemy);
+            enemy.isAttacking = false;
+            gsap.to('#playerHealth', {
+                width: player.health + '%'
+            });
+
+            if (enemy.health <= 0 || player.health <= 0) {
+                determineWinner({
+                    player,
+                    enemy,
+                    timerId,
                 });
-
-                if (enemy.health <= 0 || player.health <= 0) {
-                    determineWinner({
-                        player,
-                        enemy,
-                        timerId,
-                    });
-                }
             }
         }
+
     }
 
     // Update the enemy's position
