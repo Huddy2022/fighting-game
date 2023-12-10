@@ -131,7 +131,7 @@ const player = new Fighter({
             x: 100,
             y: 50
         },
-        width: 150,
+        width: 250,
         height: 50
     }
 })
@@ -150,28 +150,28 @@ const enemy = new Fighter({
         y: 0
     },
     imageSrc: './img/boss/idle.png',
-    scale: 3.5,
     framesMax: 8,
     damageAmount: 20,
+    scale: 3.5,
     offset: {
-        x: 375,
-        y: 146
+        x: 150,
+        y: 142
     },
     sprites: {
         idle: {
             imageSrc: './img/boss/idle.png',
-            framesMax: 8
+            framesMax: 8,
         },
         idleReverse: {
-            imageSrc: './img/boss2/idleReverse.png',
-            framesMax: 8
+            imageSrc: './img/boss/idleReverse.png',
+            framesMax: 8,
         },
         run: {
             imageSrc: './img/boss/run.png',
             framesMax: 8,
         },
         runReverse: {
-            imageSrc: './img/boss2/runReverse.png',
+            imageSrc: './img/boss/runReverse.png',
             framesMax: 8,
         },
         attack1: {
@@ -179,7 +179,7 @@ const enemy = new Fighter({
             framesMax: 10,
         },
         attackReverse: {
-            imageSrc: './img/boss2/attackReverse.png',
+            imageSrc: './img/boss/attackReverse.png',
             framesMax: 10,
         },
         takeHit: {
@@ -187,7 +187,7 @@ const enemy = new Fighter({
             framesMax: 3,
         },
         takeHitReverse: {
-            imageSrc: './img/boss2/takeHitReverse.png',
+            imageSrc: './img/boss/takeHitReverse.png',
             framesMax: 3,
         },
         death: {
@@ -195,13 +195,13 @@ const enemy = new Fighter({
             framesMax: 8,
         },
         deathReverse: {
-            imageSrc: './img/boss2/deathReverse.png',
+            imageSrc: './img/boss/deathReverse.png',
             framesMax: 8,
         }
     },
     attackBox: {
         offset: {
-            x: -200,
+            x: -50,
             y: 50
         },
         width: 150,
@@ -243,27 +243,26 @@ function updateEnemyAI() {
     if (isEnemyOnGround) {
         // Follow the player horizontally while maintaining a distance
 
-        if (distanceToPlayer > 200) {
+        if (distanceToPlayer > 70) {
             if (playerPositionX < enemyPositionX) {
+                enemy.switchSprite('run');
+                enemy.attackBox.offset.x = -50
                 enemy.velocity.x = -9;
-                enemy.switchSprite('run'); // Move left
-                enemy.attackBox.offset.x = -200
             } else if (playerPositionX > enemyPositionX) {
-                enemy.velocity.x = 9; // Move right
                 enemy.switchSprite('runReverse');
-                enemy.attackBox.offset.x = 10
+                enemy.attackBox.offset.x = 50
+                enemy.velocity.x = 9;
             }
         } else {
             enemy.velocity.x = 0; // Stop moving horizontally if too close to the player
         }
 
         // Implement attacking behavior with cooldown
-        if (distanceToPlayer < 210 && enemyAttackCooldown <= 0) {
+        if (distanceToPlayer < 80 && enemyAttackCooldown <= 0) {
             if (playerPositionX < enemyPositionX) {
                 enemy.attack();
                 enemyAttackCooldown = attackCooldownDuration;
             } else if (playerPositionX > enemyPositionX) {
-                enemy.attackBox.offset.x = 10
                 enemy.attack2();
                 enemyAttackCooldown = attackCooldownDuration;
             }
@@ -273,9 +272,8 @@ function updateEnemyAI() {
         enemyAttackCooldown = Math.max(0, enemyAttackCooldown - 1);
 
         // Implement jumping behavior (less frequent)
-        if (Math.random() < 0.0075 && enemy.position.y === 473) {
-            // Jump with a small probability (0.5% chance) if the enemy is on the ground
-            enemy.velocity.y = -20; // Adjust the jump height by changing the vertical velocity
+        if (Math.random() < 0.0075 && isEnemyOnGround) {
+            enemy.velocity.y = -20;
         }
 
         // Detect for collision & player get hit
