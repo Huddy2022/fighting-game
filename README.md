@@ -12,44 +12,49 @@ The climax of the game is the epic battle against the Boss – a formidable adve
 
 
 ## Features
-- **Feature 1:** Character movement and jumping
-- **Feature 2:** Attack moves and combos
-- **Feature 3:** Dynamic enemy AI
-- **Feature 4:** Leaderboard for tracking top players
-- **Feature 5:** How to Play instructions
 
-## Levels/Pages
+### `index.html` (Home Screen)
+- **Description:** The landing page where players start the game, access the leaderboard, and learn how to play.
+- **Features:**
+  - Start Game Button: Initiates the game and redirects the player to the character selection page.
+  - Player Name Input: Allows the player to enter their name before starting the game.
+  - Leaderboard Button: Displays the top player scores.
+  - How to Play Button: Provides instructions on how to play the game.
 
-### Home Page
-- **Description:** The landing page where players can start the game, access the leaderboard, and learn how to play.
-- **Functionality:** Start the game, show leaderboard, and access the "How to Play" guide.
+### `game1.html`, `game2.html`, `game3.html` (Round Levels)
+- **Description:** The main game interface where players battle enemies in one-on-one combat.
+- **Features:**
+  - Game Canvas: Displays the game environment and characters.
+  - Character Movement: Players can move left and right using 'A' and 'D' keys.
+  - Jumping: Execute jumps with the 'W' key.
+  - Attacks: Unleash powerful attacks using the Spacebar.
+  - Enemy Behavior: Each level introduces a new enemy with unique attacks and movement patterns.
+  - Health Display: Shows the player's remaining health.
+  - Level Progression: Advancement to the next level upon defeating the current enemy.
 
-### Game Page
-- **Description:** The main game interface where players battle enemies.
-- **Functionality:** Move left/right, jump, attack enemies, and display player health.
+### `boss.html` (Boss Battle Page)
+- **Description:** The climactic final battle against a powerful boss enemy.
+- **Features:**
+  - Boss Enemy: Introduces a formidable boss character with advanced attacks and defenses.
+  - Challenging Gameplay: Requires players to employ advanced strategies to defeat the boss.
+  - Victory Conditions: Completing the boss battle signifies the end of the game.
+  - Score Calculation: The faster the completion time, the higher the score.
 
-### Leaderboard Page
-- **Description:** Displays the top players and their scores.
-- **Functionality:** View the leaderboard and reset it if needed.
+### `leaderboard.html` (Leaderboard Page)
+- **Description:** Displays the top players and their scores based on completion times/scores.
+- **Features:**
+  - Leaderboard Table: Lists the top players along with their rounds won, total game time, and score.
+  - Reset Leaderboard Button: Allows resetting the leaderboard if needed.
 
-### How to Play Page
+### `how-to-play.html` (How to Play Page)
 - **Description:** Instructions on how to play the game.
-- **Functionality:** Read the game instructions.
+- **Features:**
+  - Gameplay Instructions: Provides details on character controls, movement, attacks, and gameplay mechanics.
 
-## Functionality
-- **Character Movement:** Use 'A' and 'D' keys.
-- **Jumping:** Press 'W' key.
-- **Attacks:** Press Spacebar.
-- **Leaderboard:** Shows top player scores.
-- **How to Play:** Provides instructions for playing the game.
 
 ## Known Bugs and Issue Resolution
-- **Bug:** Glitch on enemy take hit animation.
-- **Resolution:** [Describe how you plan to resolve the issue.]
-
-## Potential Remaining Bugs
-- **Bug:** [Describe the potential bug or glitch.]
-- **Resolution:** [Provide a plan or potential solution.]
+- **Bug:** Glitch on enemy take hit animation, as it sometimes gets stuck in a loop once hit and takes a while to get out of the loop.
+- **Resolution:** Testing further I might Implement a timeout mechanism to limit the duration of the take-hit animation. 
 
 ## Technologies Used
 - HTML5
@@ -59,6 +64,53 @@ The climax of the game is the epic battle against the Boss – a formidable adve
 - GSAP Animation Library
 
 ## Testing
+
+| Feature                       | Description                               | Expected Outcome                          | Status         |
+|-------------------------------|-------------------------------------------|-------------------------------------------|----------------|
+| **Home Screen (index.html)**   |                                           |                                           |                |
+| Start Game Button              | Clicking the "Start Game" button          | Redirects to the first game level with   | Passed |
+|                               |                                           | player name as a query parameter.        |                |
+| Leaderboard Button             | Clicking the "Leaderboard" button         | Displays the leaderboard with the top    | Passed  |
+|                               |                                           | five players.                             |                |
+| How to Play Button             | Clicking the "How to Play" button         | Shows the "How to Play" instructions.    | Passed  |
+| Play/Pause Music Button        | Clicking the "Play/Pause Music" button    | Toggles the background music between    | Passed |
+|                               |                                           | play and pause states.                   |                |
+| **Game Level 1 (game1.html)**  |                                           |                                           |                |
+| Player Movement               | Using 'A' and 'D' keys to move left/right | Player moves smoothly within the         | Passed  |
+|                               |                                           | boundaries.                              |                |
+| Player Jump                   | Pressing 'W' key to make the player jump  | Player jumps and gravity affects the     | Passed  |
+|                               |                                           | movement.                                |                |
+| Player Attack                 | Pressing Spacebar to unleash attacks       | Player attacks, and attack animations    | Passed  |
+|                               |                                           | play correctly.                          |                |
+| Enemy Behavior                | Enemy reacts to player actions            | Enemy responds appropriately to player   | Passed  |
+|                               |                                           | movements and attacks.                   |                |
+| Level Completion              | Completing the level objectives           | Progresses to the next game level.       | Passed  |
+| **Game Level 2 (game2.html)**  |                                           |                                           |                |
+| Player Movement               | Using 'A' and 'D' keys to move left/right | Player moves smoothly within the         | Passed  |
+|                               |                                           | boundaries.                              |                |
+| Player Jump                   | Pressing 'W' key to make the player jump  | Player jumps and gravity affects the     | Passed  |
+|                               |                                           | movement.                                |                |
+| Player Attack                 | Pressing Spacebar to unleash attacks       | Player attacks, and attack animations    | Passed  |
+|                               |                                           | play correctly.                          |                |
+| Enemy Behavior                | Enemy reacts to player actions            | Enemy responds appropriately to player   | Passed  |
+|                               |                                           | movements and attacks.                   |                |
+| Level Completion              | Completing the level objectives           | Progresses to the next game level.       | Passed  |
+| **Game Level 3 (game3.html)**  |                                           |                                           |                |
+| Player Movement               | Using 'A' and 'D' keys to move left/right | Player moves smoothly within the         | Passed  |
+|                               |                                           | boundaries.                              |                |
+| Player Jump                   | Pressing 'W' key to make the player jump  | Player jumps and gravity affects the     | Passed  |
+|                               |                                           | movement.                                |                |
+| Player Attack                 | Pressing Spacebar to unleash attacks       | Player attacks, and attack animations    | Passed  |
+|                               |                                           | play correctly.                          |                |
+| Enemy Behavior                | Enemy reacts to player actions            | Enemy responds appropriately to player   | Passed  |
+|                               |                                           | movements and attacks.                   |                |
+| Level Completion              | Completing the level objectives           | Progresses to the next game level.       | Passed  |
+| **Boss Level (boss.html)**     |                                           |                                           |                |
+| Boss Behavior                 | Boss reacts to player actions             | Boss responds appropriately to player    | Passed  |
+|                               |                                           | movements and attacks.                   |                |
+| Game Completion               | Completing the entire game                | Redirects to the leaderboard with the    | Passed  |
+|                               |                                           | player's score and details.              |                |
+
 ### Validator Testing
 
 - HTML
@@ -75,8 +127,7 @@ I used the JS Hint to check my code and I can confirm all clear and no errors we
 
 - Accessibility
 
-I confirmed the colours and fonts are easy to read and I tested the colours I have chosen through the web aim contrast checker.
-I used the lighthouse in dev tools to test my web page on a desktop and mobile devices.
+I used the lighthouse in dev tools to test my web page on a desktop (not designed for mobile use).
 
 ### Deployment
 
@@ -86,7 +137,10 @@ I used the lighthouse in dev tools to test my web page on a desktop and mobile d
    - Once the main branch has been selected, the page will be automatically refreshed with a detailed ribbon display to indicate the successful deployment.
 
 ## Credits
-- [List any third-party assets, libraries, or resources used.]
+- [YouTube Tutorial](https://www.youtube.com/watch?v=vyqbNFMDRGQ): This YouTube tutorial provided the fundamentals for my fighting game, teaching me how to create the canvas, player, and enemy. I adapted the tutorial to transform the game into an AI fighting game.
+- [Game Assets Website](https://itch.io/game-assets/tag-sprites): This website supplied the canvas, player, enemy, and object sprites for the game.
+- [Music Source](https://www.chosic.com/free-music/games/): This website provided the music used in the index and all game levels.
+
 
 ## Feedback
 - I welcome any feedback or suggestions you may have. Feel free to reach out via my github.
