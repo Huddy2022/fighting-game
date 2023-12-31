@@ -1,5 +1,5 @@
-const canvas = document.querySelector('canvas')
-const c = canvas.getContext('2d')
+const canvas = document.querySelector('canvas');
+const c = canvas.getContext('2d');
 
 const gamer = localStorage.getItem('playerName');
 const totalGameTimeFromGame1 = localStorage.getItem('totalGameTime');
@@ -12,10 +12,10 @@ let playerData = {
     score: 0,
 };
 
-canvas.width = 1024
-canvas.height = 673
+canvas.width = 1024;
+canvas.height = 673;
 
-c.fillRect(0, 0, canvas.width, canvas.height)
+c.fillRect(0, 0, canvas.width, canvas.height);
 
 const background = new Sprite({
     position: {
@@ -23,9 +23,9 @@ const background = new Sprite({
         y: 0
     },
     imageSrc: './img/background2.png'
-})
+});
 
-const gravity = 0.7
+const gravity = 0.7;
 
 const ghost = new Sprite({
     position: {
@@ -35,7 +35,7 @@ const ghost = new Sprite({
     imageSrc: './img/ghost.png',
     scale: 2.5,
     framesMax: 4
-})
+});
 
 const fireSkull = new Sprite({
     position: {
@@ -45,7 +45,7 @@ const fireSkull = new Sprite({
     imageSrc: './img/fire-skull.png',
     scale: 1,
     framesMax: 8
-})
+});
 
 const player = new Fighter({
     position: {
@@ -134,7 +134,7 @@ const player = new Fighter({
         width: 150,
         height: 50
     }
-})
+});
 
 const enemy = new Fighter({
     position: {
@@ -207,7 +207,7 @@ const enemy = new Fighter({
         width: 200,
         height: 50
     },
-})
+});
 
 const keys = {
     a: {
@@ -226,7 +226,7 @@ const keys = {
         pressed: false
     }
 
-}
+};
 
 let enemyAttackCooldown = 0;
 let attackCooldownDuration = 60; // Cooldown duration in frames (assuming 60 FPS)
@@ -248,11 +248,11 @@ function updateEnemyAI(player, enemy) {
             if (playerPositionX < enemyPositionX) {
                 enemy.velocity.x = -5;
                 enemy.switchSprite('run'); // Move left
-                enemy.attackBox.offset.x = -200
+                enemy.attackBox.offset.x = -200;
             } else if (playerPositionX > enemyPositionX) {
                 enemy.velocity.x = 5; // Move right
                 enemy.switchSprite('runReverse');
-                enemy.attackBox.offset.x = 25
+                enemy.attackBox.offset.x = 25;
             }
         } else {
             enemy.velocity.x = 0; // Stop moving horizontally if too close to the player
@@ -341,23 +341,23 @@ function startGame() {
 }
 
 function animate() {
-    window.requestAnimationFrame(animate)
-    c.fillStyle = 'black'
-    c.fillRect(0, 0, canvas.width, canvas.height)
-    background.update()
-    ghost.update()
-    fireSkull.update()
-    c.fillStyle = 'rgba(255, 255, 255, 0.05)'
-    c.fillRect(0, 0, canvas.width, canvas.height)
-    player.update()
+    window.requestAnimationFrame(animate);
+    c.fillStyle = 'black';
+    c.fillRect(0, 0, canvas.width, canvas.height);
+    background.update();
+    ghost.update();
+    fireSkull.update();
+    c.fillStyle = 'rgba(255, 255, 255, 0.05)';
+    c.fillRect(0, 0, canvas.width, canvas.height);
+    player.update();
 
     // Update the enemy's AI
     updateEnemyAI(player, enemy);
 
     //enemy.update()
 
-    player.velocity.x = 0
-    enemy.velocity.x = 0
+    player.velocity.x = 0;
+    enemy.velocity.x = 0;
 
     // Execute key down function to escape back to home page
     if (escapeKeyPressed) {
@@ -366,13 +366,13 @@ function animate() {
 
     //Player movemnet
     if (keys.a.pressed && player.lastKey === 'a') {
-        player.velocity.x = -5
-        player.switchSprite('runReverse')
-        player.attackBox.offset.x = -200
+        player.velocity.x = -5;
+        player.switchSprite('runReverse');
+        player.attackBox.offset.x = -200;
     } else if (keys.d.pressed && player.lastKey === 'd') {
-        player.velocity.x = 5
-        player.switchSprite('run')
-        player.attackBox.offset.x = 100
+        player.velocity.x = 5;
+        player.switchSprite('run');
+        player.attackBox.offset.x = 100;
     } else {
         if (player.lastKey === 'a') {
             player.switchSprite('idleReverse');
@@ -385,16 +385,16 @@ function animate() {
 
     //Player Jump
     if (player.velocity.y < 0 && player.lastKey === 'a') {
-        player.switchSprite('jumpReverse')
+        player.switchSprite('jumpReverse');
     } else if (player.velocity.y < 0 && player.lastKey === 'd') {
-        player.switchSprite('jump')
+        player.switchSprite('jump');
     }
 
     // Player Fall
     if (player.velocity.y > 0 && player.lastKey === 'a') {
-        player.switchSprite('fallReverse')
+        player.switchSprite('fallReverse');
     } else if (player.velocity.y > 0 && player.lastKey === 'd') {
-        player.switchSprite('fall')
+        player.switchSprite('fall');
     }
 
     // Detect for collision & enemy get hit
@@ -407,18 +407,18 @@ function animate() {
         } else {
             enemy.switchSprite('takeHit');
         }
-        enemy.takeHit(player)
+        enemy.takeHit(player);
         player.velocity.x = -3;
-        player.isAttacking = false
+        player.isAttacking = false;
         gsap.to('#enemyHealth', {
             width: enemy.health + '%'
-        })
+        });
     }
 
     // If player misses
 
     if (player.isAttacking && player.frameCurrent === 4) {
-        player.isAttacking = false
+        player.isAttacking = false;
     }
 
     if (enemy.health <= 0 || player.health <= 0) {
@@ -426,7 +426,7 @@ function animate() {
             player,
             enemy,
             timerId
-        })
+        });
 
     }
 
@@ -547,7 +547,7 @@ function newGame() {
     startPreGameTimer();
 }
 
-newGame()
+newGame();
 
 let escapeKeyPressed = false;
 
@@ -562,16 +562,16 @@ window.addEventListener('keydown', (event) => {
     if (!player.dead) {
         switch (event.key) {
             case 'd':
-                keys.d.pressed = true
-                player.lastKey = 'd'
-                break
+                keys.d.pressed = true;
+                player.lastKey = 'd';
+                break;
             case 'a':
-                keys.a.pressed = true
-                player.lastKey = 'a'
-                break
+                keys.a.pressed = true;
+                player.lastKey = 'a';
+                break;
             case 'w':
-                player.velocity.y = -20
-                break
+                player.velocity.y = -20;
+                break;
             case ' ':
                 if (player.lastKey === 'a') {
                     player.attack2();
@@ -581,7 +581,7 @@ window.addEventListener('keydown', (event) => {
                 break;
         }
     }
-})
+});
 
 window.addEventListener('keyup', (event) => {
 
@@ -591,10 +591,10 @@ window.addEventListener('keyup', (event) => {
 
     switch (event.key) {
         case 'd':
-            keys.d.pressed = false
-            break
+            keys.d.pressed = false;
+            break;
         case 'a':
-            keys.a.pressed = false
-            break
+            keys.a.pressed = false;
+            break;
     }
-})
+});

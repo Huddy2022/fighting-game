@@ -10,7 +10,7 @@ function rectangluarCollison({
         rectangle1.attackBox.position.x <= rectangle2.position.x + rectangle2.width &&
         rectangle1.attackBox.position.y + rectangle1.attackBox.height >= rectangle2.position.y &&
         rectangle1.attackBox.position.y <= rectangle2.position.y + rectangle2.height
-    )
+    );
 }
 
 
@@ -68,14 +68,14 @@ function displayStars(count, elementId) {
 }
 
 
-let timer = 60
-let timerId
+let timer = 60;
+let timerId;
 
 function decreaseTimer() {
-    timerId = setTimeout(decreaseTimer, 1000)
+    timerId = setTimeout(decreaseTimer, 1000);
     if (timer > 0) {
-        timer--
-        document.querySelector('#timer').innerHTML = timer
+        timer--;
+        document.querySelector('#timer').innerHTML = timer;
     }
 
     if (timer === 0) {
@@ -83,6 +83,6 @@ function decreaseTimer() {
             player,
             enemy,
             timerId
-        })
+        });
     }
 }

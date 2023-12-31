@@ -58,16 +58,15 @@
         <div id="preGameText"
             style="position: absolute; color: white; align-items: center; justify-content: center; top: 335px; left: 475px; display: block;">
         </div>
-        <a href="game3.html"><button id="startRoundThree"
-                style="display: none; position: absolute; top: 5px; left: 20px; cursor: pointer;"
-                onmouseover="this.style.backgroundColor='#ffff00'; this.style.color='#333';"
-                onmouseout="this.style.backgroundColor='#f2f2f2'; this.style.color='black';">Start
-                Round 3</button></a>
-        <a href="index.html"><button id="tryAgain"
-                style="display: none; position: absolute; top: 5px; left: 20px; cursor: pointer;"
-                onmouseover="this.style.backgroundColor='#ffff00'; this.style.color='#333';"
-                onmouseout="this.style.backgroundColor='#f2f2f2'; this.style.color='black';">Try
-                Again!</button></a>
+        <button id="startRoundThree" style="display: none; position: absolute; top: 5px; left: 20px; cursor: pointer;"
+            onmouseover="this.style.backgroundColor='#ffff00'; this.style.color='#333';"
+            onmouseout="this.style.backgroundColor='#f2f2f2'; this.style.color='black';" onclick="startRoundThree()">Start
+            Round
+            3</button>
+        <button id="tryAgain" style="display: none; position: absolute; top: 5px; left: 20px; cursor: pointer;"
+            onmouseover="this.style.backgroundColor='#ffff00'; this.style.color='#333';"
+            onmouseout="this.style.backgroundColor='#f2f2f2'; this.style.color='black';" onclick="tryAgain()">Try
+            Again!</button>
         <button id="playButton" style="position: absolute; top: 5px; right: 20px; cursor: pointer;"
             onmouseover="this.style.backgroundColor='#ffff00'; this.style.color='#333';"
             onmouseout="this.style.backgroundColor='#f2f2f2'; this.style.color='black';">Pause Music</button>
@@ -75,37 +74,46 @@
 
         <canvas></canvas>
     </div>
+    <script>
+        const audio = document.getElementById('bgMusic');
+        const playButton = document.getElementById('playButton');
+
+        playButton.addEventListener('click', function () {
+            if (audio.paused) {
+                audio.play().catch(error => {
+                    // Autoplay was prevented. You can handle this situation, e.g., by displaying a message to the user.
+                    console.error('Autoplay prevented:', error);
+                });
+                playButton.textContent = 'Pause Music';
+            } else {
+                audio.pause();
+                playButton.textContent = 'Play Music';
+            }
+        });
+
+        function startRoundThree() {
+            window.location.href = 'game3.html';
+        };
+
+        function tryAgain() {
+            window.location.href = 'index.html';
+        };
+
+        // Stop the music when the page is not visible
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                audio.pause();
+                audio.currentTime = 0; // Reset the playback to the beginning
+            }
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"
+        integrity="sha512-16esztaSRplJROstbIIdwX3N97V1+pZvV33ABoG1H2OyTttBxEGkTsoIVsiP1iaTtM8b3+hu2kB6pQ4Clr5yug=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/classes.js"></script>
+    <script src="game2.js"></script>
 </body>
-<script>
-    const audio = document.getElementById('bgMusic');
-    const playButton = document.getElementById('playButton');
 
-    playButton.addEventListener('click', function () {
-        if (audio.paused) {
-            audio.play().catch(error => {
-                // Autoplay was prevented. You can handle this situation, e.g., by displaying a message to the user.
-                console.error('Autoplay prevented:', error);
-            });
-            playButton.textContent = 'Pause Music';
-        } else {
-            audio.pause();
-            playButton.textContent = 'Play Music';
-        }
-    });
-
-    // Stop the music when the page is not visible
-    document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-            audio.pause();
-            audio.currentTime = 0; // Reset the playback to the beginning
-        }
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"
-    integrity="sha512-16esztaSRplJROstbIIdwX3N97V1+pZvV33ABoG1H2OyTttBxEGkTsoIVsiP1iaTtM8b3+hu2kB6pQ4Clr5yug=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="js/utils.js"></script>
-<script src="js/classes.js"></script>
-<script src="game2.js"></script>
 
 </html>

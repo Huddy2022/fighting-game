@@ -84,134 +84,134 @@
         <source src="./audio/home.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
-
-</body>
-<script>
-    const audio = document.getElementById('bgMusic');
-    const playButton = document.getElementById('playButton');
-    const playerNameInput = document.getElementById('playerNameInput');
-
-    playButton.addEventListener('click', function () {
-        if (audio.paused) {
-            audio.play().catch(error => {
-                // Autoplay was prevented. You can handle this situation, e.g., by displaying a message to the user.
-                console.error('Autoplay prevented:', error);
-            });
-            playButton.textContent = 'Pause Music';
-        } else {
-            audio.pause();
-            playButton.textContent = 'Play Music';
-        }
-    });
-
-    // Stop the music when the page is not visible
-    document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-            audio.pause();
-            audio.currentTime = 0; // Reset the playback to the beginning
-        }
-    });
-
-    // Start the game when the "Start Game" button is clicked
-    const leaderboardButton = document.getElementById('leaderboardButton');
-    leaderboardButton.addEventListener('click', displayLeaderboard);
-
-    // Display leaderboard on index.html
-    function displayLeaderboard() {
-        const leaderboardContainer = document.querySelector('.leaderboard-container');
-
-        // Retrieve existing leaderboard data from localStorage
-        const savedLeaderboardData = localStorage.getItem('leaderboardData');
-        let leaderboardData = savedLeaderboardData ? JSON.parse(savedLeaderboardData) : [];
-
-        // Retrieve player data from localStorage
-        const savedPlayerData = localStorage.getItem('playerData');
-
-        if (savedPlayerData) {
-            const playerData = JSON.parse(savedPlayerData);
-
-            // Add the current player data to the leaderboard
-            leaderboardData.push(playerData);
-
-            // Sort the leaderboard data based on score (descending order)
-            leaderboardData.sort((a, b) => b.score - a.score);
-
-            // Update the table with the top five players
-            for (let i = 0; i < Math.min(5, leaderboardData.length); i++) {
-                const currentPlayer = leaderboardData[i];
-
-                document.getElementById(`leaderboardName${i + 1}`).textContent = currentPlayer.playerName;
-                document.getElementById(`leaderboardRoundsWon${i + 1}`).textContent = currentPlayer.roundsWon;
-                document.getElementById(`leaderboardTotalGameTime${i + 1}`).textContent =
-                    `${currentPlayer.totalGameTime} seconds`;
-                document.getElementById(`leaderboardScore${i + 1}`).textContent = currentPlayer.score;
-            }
-
-            // Toggle the visibility of the leaderboard container
-            leaderboardContainer.style.display = 'block';
-
-            // Save the updated leaderboard data back to localStorage
-            localStorage.setItem('leaderboardData', JSON.stringify(leaderboardData));
-
-            // Clear the current player's data from localStorage outside the if block
-            localStorage.removeItem('playerData');
-        }
-        // Toggle the visibility of the leaderboard container
-        leaderboardContainer.style.display = (leaderboardContainer.style.display === 'none' || leaderboardContainer
-            .style.display === '') ? 'block' : 'none';
-    }
-
-    // Add a click event listener for the "How to Play" button
-    const howToPlayButton = document.getElementById('howToPlayButton');
-    howToPlayButton.addEventListener('click', toggleHowToPlay);
-
-    // Function to toggle the visibility of the "How to Play" container
-    function toggleHowToPlay() {
-        const howToPlayContainer = document.querySelector('.how-to-play-container');
-        howToPlayContainer.style.display = (howToPlayContainer.style.display === 'none' ||
-            howToPlayContainer.style.display === '') ? 'block' : 'none';
-    }
-
-    // Add event listener for the reset leaderboard button
-    const resetLeaderboardButton = document.getElementById('resetLeaderboardButton');
-    resetLeaderboardButton.addEventListener('click', resetLeaderboard);
-
-    // Function to reset the leaderboard
-    function resetLeaderboard() {
-        // Clear the leaderboard data from localStorage
-        localStorage.removeItem('leaderboardData');
-
-        // Update the table to show an empty leaderboard
-        for (let i = 1; i <= 5; i++) {
-            document.getElementById(`leaderboardName${i}`).textContent = '';
-            document.getElementById(`leaderboardRoundsWon${i}`).textContent = '';
-            document.getElementById(`leaderboardTotalGameTime${i}`).textContent = '';
-            document.getElementById(`leaderboardScore${i}`).textContent = '';
-        }
-    }
-
-    function startGame() {
-        // Extract the player name from the input field
+    <script>
+        const audio = document.getElementById('bgMusic');
+        const playButton = document.getElementById('playButton');
         const playerNameInput = document.getElementById('playerNameInput');
-        const playerName = playerNameInput.value;
 
-        // Check if the player name is not empty
-        if (playerName.trim() == "") {
-            errorMessage.textContent = "Please enter your name before starting the game.";
-            errorMessage.style.display = "block";
-            return;
-        };
+        playButton.addEventListener('click', function () {
+            if (audio.paused) {
+                audio.play().catch(error => {
+                    // Autoplay was prevented. You can handle this situation, e.g., by displaying a message to the user.
+                    console.error('Autoplay prevented:', error);
+                });
+                playButton.textContent = 'Pause Music';
+            } else {
+                audio.pause();
+                playButton.textContent = 'Play Music';
+            }
+        });
 
-        // Save the player name to localStorage
-        localStorage.setItem('playerName', playerName);
+        // Stop the music when the page is not visible
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                audio.pause();
+                audio.currentTime = 0; // Reset the playback to the beginning
+            }
+        });
 
-        // Redirect to game1.html with the player name as a query parameter
-        window.location.href = `game1.html?playerName=${encodeURIComponent(playerName)}`;
-    }
+        // Start the game when the "Start Game" button is clicked
+        const leaderboardButton = document.getElementById('leaderboardButton');
+        leaderboardButton.addEventListener('click', displayLeaderboard);
 
-    // Start the game when the "Start Game" button is clicked
-    const startGameButton = document.getElementById('startGameButton');
-    startGameButton.addEventListener('click', startGame);
-</script>
+        // Display leaderboard on index.html
+        function displayLeaderboard() {
+            const leaderboardContainer = document.querySelector('.leaderboard-container');
+
+            // Retrieve existing leaderboard data from localStorage
+            const savedLeaderboardData = localStorage.getItem('leaderboardData');
+            let leaderboardData = savedLeaderboardData ? JSON.parse(savedLeaderboardData) : [];
+
+            // Retrieve player data from localStorage
+            const savedPlayerData = localStorage.getItem('playerData');
+
+            if (savedPlayerData) {
+                const playerData = JSON.parse(savedPlayerData);
+
+                // Add the current player data to the leaderboard
+                leaderboardData.push(playerData);
+
+                // Sort the leaderboard data based on score (descending order)
+                leaderboardData.sort((a, b) => b.score - a.score);
+
+                // Update the table with the top five players
+                for (let i = 0; i < Math.min(5, leaderboardData.length); i++) {
+                    const currentPlayer = leaderboardData[i];
+
+                    document.getElementById(`leaderboardName${i + 1}`).textContent = currentPlayer.playerName;
+                    document.getElementById(`leaderboardRoundsWon${i + 1}`).textContent = currentPlayer.roundsWon;
+                    document.getElementById(`leaderboardTotalGameTime${i + 1}`).textContent =
+                        `${currentPlayer.totalGameTime} seconds`;
+                    document.getElementById(`leaderboardScore${i + 1}`).textContent = currentPlayer.score;
+                }
+
+                // Toggle the visibility of the leaderboard container
+                leaderboardContainer.style.display = 'block';
+
+                // Save the updated leaderboard data back to localStorage
+                localStorage.setItem('leaderboardData', JSON.stringify(leaderboardData));
+
+                // Clear the current player's data from localStorage outside the if block
+                localStorage.removeItem('playerData');
+            }
+            // Toggle the visibility of the leaderboard container
+            leaderboardContainer.style.display = (leaderboardContainer.style.display === 'none' || leaderboardContainer
+                .style.display === '') ? 'block' : 'none';
+        }
+
+        // Add a click event listener for the "How to Play" button
+        const howToPlayButton = document.getElementById('howToPlayButton');
+        howToPlayButton.addEventListener('click', toggleHowToPlay);
+
+        // Function to toggle the visibility of the "How to Play" container
+        function toggleHowToPlay() {
+            const howToPlayContainer = document.querySelector('.how-to-play-container');
+            howToPlayContainer.style.display = (howToPlayContainer.style.display === 'none' ||
+                howToPlayContainer.style.display === '') ? 'block' : 'none';
+        }
+
+        // Add event listener for the reset leaderboard button
+        const resetLeaderboardButton = document.getElementById('resetLeaderboardButton');
+        resetLeaderboardButton.addEventListener('click', resetLeaderboard);
+
+        // Function to reset the leaderboard
+        function resetLeaderboard() {
+            // Clear the leaderboard data from localStorage
+            localStorage.removeItem('leaderboardData');
+
+            // Update the table to show an empty leaderboard
+            for (let i = 1; i <= 5; i++) {
+                document.getElementById(`leaderboardName${i}`).textContent = '';
+                document.getElementById(`leaderboardRoundsWon${i}`).textContent = '';
+                document.getElementById(`leaderboardTotalGameTime${i}`).textContent = '';
+                document.getElementById(`leaderboardScore${i}`).textContent = '';
+            }
+        }
+
+        function startGame() {
+            // Extract the player name from the input field
+            const playerNameInput = document.getElementById('playerNameInput');
+            const playerName = playerNameInput.value;
+
+            // Check if the player name is not empty
+            if (playerName.trim() == "") {
+                errorMessage.textContent = "Please enter your name before starting the game.";
+                errorMessage.style.display = "block";
+                return;
+            };
+
+            // Save the player name to localStorage
+            localStorage.setItem('playerName', playerName);
+
+            // Redirect to game1.html with the player name as a query parameter
+            window.location.href = `game1.html?playerName=${encodeURIComponent(playerName)}`;
+        }
+
+        // Start the game when the "Start Game" button is clicked
+        const startGameButton = document.getElementById('startGameButton');
+        startGameButton.addEventListener('click', startGame);
+    </script>
+</body>
+
 
 </html>
