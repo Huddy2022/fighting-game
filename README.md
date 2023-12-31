@@ -3,6 +3,8 @@
 ## Live Link
 [Live Demo](https://huddy2022.github.io/fighting-game/)
 
+![Game Screenshot](./images/game_screenshot.png)
+
 ## Overview
 The Fighting Game is an engaging and dynamic web-based adventure where players embark on a heroic journey to defeat a series of enemies in one-on-one combat. The game consists of multiple levels, each presenting a new challenge for the player to overcome. The ultimate goal is to progress through all levels, face off against a formidable boss, and achieve the fastest completion time to secure a spot on the coveted leaderboard.
 
@@ -21,6 +23,8 @@ The climax of the game is the epic battle against the Boss – a formidable adve
   - Leaderboard Button: Displays the top player scores.
   - How to Play Button: Provides instructions on how to play the game.
 
+![Home Page](./images/game_screenshot.png)
+
 ### `game1.html`, `game2.html`, `game3.html` (Round Levels)
 - **Description:** The main game interface where players battle enemies in one-on-one combat.
 - **Features:**
@@ -32,6 +36,12 @@ The climax of the game is the epic battle against the Boss – a formidable adve
   - Health Display: Shows the player's remaining health.
   - Level Progression: Advancement to the next level upon defeating the current enemy.
 
+![Game 1](./images/game_screenshot.png)
+
+![Game 2](./images/game_screenshot.png)
+
+![Game 3](./images/game_screenshot.png)
+
 ### `boss.html` (Boss Battle Page)
 - **Description:** The climactic final battle against a powerful boss enemy.
 - **Features:**
@@ -40,16 +50,22 @@ The climax of the game is the epic battle against the Boss – a formidable adve
   - Victory Conditions: Completing the boss battle signifies the end of the game.
   - Score Calculation: The faster the completion time, the higher the score.
 
+![Boss](./images/game_screenshot.png)
+
 ### `leaderboard.html` (Leaderboard Page)
 - **Description:** Displays the top players and their scores based on completion times/scores.
 - **Features:**
   - Leaderboard Table: Lists the top players along with their rounds won, total game time, and score.
   - Reset Leaderboard Button: Allows resetting the leaderboard if needed.
 
+![Leaderboard](./images/game_screenshot.png)
+
 ### `how-to-play.html` (How to Play Page)
 - **Description:** Instructions on how to play the game.
 - **Features:**
   - Gameplay Instructions: Provides details on character controls, movement, attacks, and gameplay mechanics.
+
+![How To Play](./images/game_screenshot.png)
 
 
 ## Known Bugs and Issue Resolution
@@ -135,6 +151,8 @@ I used the lighthouse in dev tools to test my web page on a desktop (not designe
    - In the GitHub repository, navigate to the Settings tab
    - From the source section drop-down menu, select the Main Branch
    - Once the main branch has been selected, the page will be automatically refreshed with a detailed ribbon display to indicate the successful deployment.
+
+The live game can be found here [Live Demo](https://huddy2022.github.io/fighting-game/)
 
 ## Credits
 - [YouTube Tutorial](https://www.youtube.com/watch?v=vyqbNFMDRGQ): This YouTube tutorial provided the fundamentals for my fighting game, teaching me how to create the canvas, player, and enemy. I adapted the tutorial to transform the game into an AI fighting game.
