@@ -4,7 +4,12 @@
 [Live Demo](https://huddy2022.github.io/fighting-game/)
 
 ## Overview
-The Fighting Game is an interactive web-based game where players engage in epic battles against enemies using a combination of movement, jumping, and powerful attacks. 
+The Fighting Game is an engaging and dynamic web-based adventure where players embark on a heroic journey to defeat a series of enemies in one-on-one combat. The game consists of multiple levels, each presenting a new challenge for the player to overcome. The ultimate goal is to progress through all levels, face off against a formidable boss, and achieve the fastest completion time to secure a spot on the coveted leaderboard.
+
+To advance to the next round, players must strategically navigate the battlefield, execute powerful attacks, and master the art of evasion to minimize damage. The difficulty increases with each level, requiring players to adapt their strategies to overcome the escalating challenges.
+
+The climax of the game is the epic battle against the Boss – a formidable adversary with devastating attacks and enhanced defenses. Only the most skilled and agile players will emerge victorious and etch their names onto the leaderboard. The leaderboard showcases the fastest completion times, creating a competitive environment where players strive to outperform each other.
+
 
 ## Features
 - **Feature 1:** Character movement and jumping
