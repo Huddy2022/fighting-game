@@ -65,7 +65,7 @@ The climax of the game is the epic battle against the Boss – a formidable adve
 - **Features:**
   - Gameplay Instructions: Provides details on character controls, movement, attacks, and gameplay mechanics.
 
-![How To Play](./img/readme/howToPlay.pnghowToPlay)
+![How To Play](./img/readme/howToPlay.png)
 
 
 ## Known Bugs and Issue Resolution
