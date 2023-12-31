@@ -3,7 +3,7 @@
 ## Live Link
 [Live Demo](https://huddy2022.github.io/fighting-game/)
 
-![Game Screenshot](./images/game_screenshot.png)
+![Game Screenshot](./img/readme/gameScreen.png)
 
 ## Overview
 The Fighting Game is an engaging and dynamic web-based adventure where players embark on a heroic journey to defeat a series of enemies in one-on-one combat. The game consists of multiple levels, each presenting a new challenge for the player to overcome. The ultimate goal is to progress through all levels, face off against a formidable boss, and achieve the fastest completion time to secure a spot on the coveted leaderboard.
@@ -23,7 +23,7 @@ The climax of the game is the epic battle against the Boss – a formidable adve
   - Leaderboard Button: Displays the top player scores.
   - How to Play Button: Provides instructions on how to play the game.
 
-![Home Page](./images/game_screenshot.png)
+![Home Page](./img/readme/home.png)
 
 ### `game1.html`, `game2.html`, `game3.html` (Round Levels)
 - **Description:** The main game interface where players battle enemies in one-on-one combat.
@@ -36,11 +36,11 @@ The climax of the game is the epic battle against the Boss – a formidable adve
   - Health Display: Shows the player's remaining health.
   - Level Progression: Advancement to the next level upon defeating the current enemy.
 
-![Game 1](./images/game_screenshot.png)
+![Game 1](./img/readme/game1.png)
 
-![Game 2](./images/game_screenshot.png)
+![Game 2](./img/readme/game2.png)
 
-![Game 3](./images/game_screenshot.png)
+![Game 3](./img/readme/game3.png)
 
 ### `boss.html` (Boss Battle Page)
 - **Description:** The climactic final battle against a powerful boss enemy.
@@ -50,7 +50,7 @@ The climax of the game is the epic battle against the Boss – a formidable adve
   - Victory Conditions: Completing the boss battle signifies the end of the game.
   - Score Calculation: The faster the completion time, the higher the score.
 
-![Boss](./images/game_screenshot.png)
+![Boss](./img/readme/boss.png)
 
 ### `leaderboard.html` (Leaderboard Page)
 - **Description:** Displays the top players and their scores based on completion times/scores.
@@ -58,14 +58,14 @@ The climax of the game is the epic battle against the Boss – a formidable adve
   - Leaderboard Table: Lists the top players along with their rounds won, total game time, and score.
   - Reset Leaderboard Button: Allows resetting the leaderboard if needed.
 
-![Leaderboard](./images/game_screenshot.png)
+![Leaderboard](./img/readme/leaderboard.png.png)
 
 ### `how-to-play.html` (How to Play Page)
 - **Description:** Instructions on how to play the game.
 - **Features:**
   - Gameplay Instructions: Provides details on character controls, movement, attacks, and gameplay mechanics.
 
-![How To Play](./images/game_screenshot.png)
+![How To Play](./img/readme/howToPlay.pnghowToPlay.png)
 
 
 ## Known Bugs and Issue Resolution
