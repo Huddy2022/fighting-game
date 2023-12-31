@@ -140,6 +140,7 @@ I used the lighthouse in dev tools to test my web page on a desktop (not designe
 - [YouTube Tutorial](https://www.youtube.com/watch?v=vyqbNFMDRGQ): This YouTube tutorial provided the fundamentals for my fighting game, teaching me how to create the canvas, player, and enemy. I adapted the tutorial to transform the game into an AI fighting game.
 - [Game Assets Website](https://itch.io/game-assets/tag-sprites): This website supplied the canvas, player, enemy, and object sprites for the game.
 - [Music Source](https://www.chosic.com/free-music/games/): This website provided the music used in the index and all game levels.
+- [Favicon Source](https://favicon.io/): This website provided me with the favicon for this game.
 
 
 ## Feedback
