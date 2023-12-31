@@ -92,6 +92,14 @@
             playButton.textContent = 'Play Music';
         }
     });
+
+    // Stop the music when the page is not visible
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            audio.pause();
+            audio.currentTime = 0; // Reset the playback to the beginning
+        }
+    });
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"
     integrity="sha512-16esztaSRplJROstbIIdwX3N97V1+pZvV33ABoG1H2OyTttBxEGkTsoIVsiP1iaTtM8b3+hu2kB6pQ4Clr5yug=="

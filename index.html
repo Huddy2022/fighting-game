@@ -104,6 +104,14 @@
         }
     });
 
+    // Stop the music when the page is not visible
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            audio.pause();
+            audio.currentTime = 0; // Reset the playback to the beginning
+        }
+    });
+
     // Start the game when the "Start Game" button is clicked
     const leaderboardButton = document.getElementById('leaderboardButton');
     leaderboardButton.addEventListener('click', displayLeaderboard);
