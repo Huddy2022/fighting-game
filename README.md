@@ -58,14 +58,14 @@ The climax of the game is the epic battle against the Boss – a formidable adve
   - Leaderboard Table: Lists the top players along with their rounds won, total game time, and score.
   - Reset Leaderboard Button: Allows resetting the leaderboard if needed.
 
-![Leaderboard](./img/readme/leaderboard.png.png)
+![Leaderboard](./img/readme/leaderboard.png)
 
 ### `how-to-play.html` (How to Play Page)
 - **Description:** Instructions on how to play the game.
 - **Features:**
   - Gameplay Instructions: Provides details on character controls, movement, attacks, and gameplay mechanics.
 
-![How To Play](./img/readme/howToPlay.pnghowToPlay.png)
+![How To Play](./img/readme/howToPlay.pnghowToPlay)
 
 
 ## Known Bugs and Issue Resolution
